@@ -2029,6 +2029,69 @@ void DrawRandomizerMenu() {
     }
 }
 
+void DrawLeveledMenu() {
+    if (ImGui::BeginMenu("Leveled")) {
+        if (ImGui::BeginMenu("HUD")) {
+            EnhancementCheckbox("EXP to NEXT Level", "gLeveledHUDExperienceNextLevel", false, "",
+                                UIWidgets::CheckboxGraphics::Checkmark, true);
+            UIWidgets::Tooltip("Show experience required to level up popup in the HUD when gaining EXP.");
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("Floating Numbers")) {
+            EnhancementCheckbox("Enemy Damage", "gLeveledFloatingNumberEnemyDamage", false, "",
+                                UIWidgets::CheckboxGraphics::Checkmark, true);
+            PaddedEnhancementCheckbox("Player Damage", "gLeveledFloatingNumberPlayerDamage", true, false, false, "",
+                                      UIWidgets::CheckboxGraphics::Checkmark, true);
+            PaddedEnhancementCheckbox("EXP Gain", "gLeveledFloatingNumberExpGain", true, false, false, "",
+                                      UIWidgets::CheckboxGraphics::Checkmark, true);
+            ImGui::EndMenu();
+        }
+
+        PaddedEnhancementCheckbox("Level Gives Bonus Hearts", "gLeveledHeartsWithLevelUp", true, false, false, "",
+                                  UIWidgets::CheckboxGraphics::Checkmark, true);
+        PaddedEnhancementCheckbox("Level Affects Magic Capacity", "gLeveledMagicWithLevelUp", true, false, false, "",
+                                  UIWidgets::CheckboxGraphics::Checkmark, true);
+        PaddedEnhancementCheckbox("Enemy Level Affects Base Attack", "gLeveledEnemyAttackScalesWithLevel", true, false,
+                                  false, "", UIWidgets::CheckboxGraphics::Checkmark, true);
+        UIWidgets::Tooltip("Enemies have a fixed attack value. This option scales this up the higher the enemy's "
+                           "Power(Strength) stat. \nThis will increase difficulty a bit.");
+        PaddedEnhancementCheckbox("Equipment Affects Stats", "gLeveledEquipmentStats", true, false, false, "",
+                                  UIWidgets::CheckboxGraphics::Checkmark, true);
+        PaddedEnhancementCheckbox("Navi tells enemy level", "gLeveledNaviLevel", true, false, false, "",
+                                  UIWidgets::CheckboxGraphics::Checkmark, true);
+        PaddedEnhancementCheckbox("Navi tells enemy max HP", "gLeveledNaviMaxHP", true, true, false, "",
+                                  UIWidgets::CheckboxGraphics::Checkmark, true);
+
+        if (ImGui::BeginMenu("Heart Container Value in Units")) {
+            CVarGetInteger("gLeveledHeartUnits", 4);
+            UIWidgets::EnhancementRadioButton("4 (x0.25)", "gLeveledHeartUnits", 1);
+            UIWidgets::EnhancementRadioButton("8 (x0.5)", "gLeveledHeartUnits", 2);
+            UIWidgets::EnhancementRadioButton("12 (x0.75)", "gLeveledHeartUnits", 3);
+            UIWidgets::EnhancementRadioButton("16 (Vanilla)", "gLeveledHeartUnits", 4);
+            UIWidgets::EnhancementRadioButton("20 (x1.25)", "gLeveledHeartUnits", 5);
+            UIWidgets::EnhancementRadioButton("24 (x1.5)", "gLeveledHeartUnits", 6);
+            UIWidgets::EnhancementRadioButton("28 (x1.75)", "gLeveledHeartUnits", 7);
+            UIWidgets::EnhancementRadioButton("32 (x2)", "gLeveledHeartUnits", 8);
+            UIWidgets::EnhancementRadioButton("48 (x3)", "gLeveledHeartUnits", 12);
+            UIWidgets::EnhancementRadioButton("64 (x4)", "gLeveledHeartUnits", 16);
+            UIWidgets::EnhancementRadioButton("80 (x5)", "gLeveledHeartUnits", 20);
+            UIWidgets::EnhancementRadioButton("96 (x6)", "gLeveledHeartUnits", 24);
+            UIWidgets::EnhancementRadioButton("112 (x7)", "gLeveledHeartUnits", 28);
+            UIWidgets::EnhancementRadioButton("128 (x8)", "gLeveledHeartUnits", 32);
+            ImGui::EndMenu();
+        }
+        UIWidgets::Tooltip("Sets how many health units each completed heart container is worth.\nOne heart on the "
+                           "health meter is equal to 16 health units.\nA lower setting results in lower total health.");
+
+        // if (ImGui::Button("Add 2000 EXP")){
+        //     gSaveContext.experience += 2000;
+        // }
+
+        ImGui::EndMenu();
+    }
+}
+
 void SohMenuBar::InitElement() {
     UpdateWindowBackendObjects();
 }
@@ -2068,6 +2131,10 @@ void SohMenuBar::DrawElement() {
         #endif
 
         DrawRandomizerMenu();
+
+        ImGui::SetCursorPosY(0.0f);
+
+        DrawLeveledMenu();
 
         ImGui::PopStyleVar(1);
         ImGui::EndMenuBar();

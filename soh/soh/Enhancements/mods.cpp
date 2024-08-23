@@ -78,8 +78,8 @@ void RegisterInfiniteHealth() {
     GameInteractor::Instance->RegisterGameHook<GameInteractor::OnGameFrameUpdate>([]() {
         if (!GameInteractor::IsSaveLoaded(true)) return;
         if (CVarGetInteger(CVAR_CHEAT("InfiniteHealth"), 0) != 0) {
-            if (gSaveContext.health < gSaveContext.healthCapacity) {
-                gSaveContext.health = gSaveContext.healthCapacity;
+            if (gSaveContext.health < gSaveContext.healthCapacity2) {
+                gSaveContext.health = gSaveContext.healthCapacity2;
             }
         }
     });
