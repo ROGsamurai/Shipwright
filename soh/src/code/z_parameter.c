@@ -6002,7 +6002,8 @@ void Interface_Draw(PlayState* play) {
                 case 1:
                     D_8015FFE2 = 20;
                     D_8015FFE0 = 20;
-                    gSaveContext.timer1Value = gSaveContext.health >> 1;
+                    u8 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+                    gSaveContext.timer1Value = (s32)((f32)gSaveContext.health / heartUnits * 8);
                     gSaveContext.timer1State = 2;
                     break;
                 case 2:
@@ -6805,7 +6806,8 @@ void Interface_Update(PlayState* play) {
     }
 
     if (gSaveContext.timer1State == 0) {
-        if (((D_80125A58 == 1) || (D_80125A58 == 2) || (D_80125A58 == 4)) && ((gSaveContext.health >> 1) != 0)) {
+        u8 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+        if (((D_80125A58 == 1) || (D_80125A58 == 2) || (D_80125A58 == 4)) && (((s32)((f32)gSaveContext.health / heartUnits * 8)) != 0)) {
             gSaveContext.timer1State = 1;
             gSaveContext.timerX[0] = 140;
             gSaveContext.timerY[0] = 80;
