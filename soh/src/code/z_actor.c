@@ -1219,8 +1219,9 @@ void Actor_RefreshLeveledStats(Actor* actor, Player* player) {
     if (actor->category == ACTORCAT_PLAYER) {
         actor->power = GetActorStat_PlayerPower(actor->level);
         actor->courage = GetActorStat_PlayerCourage(actor->level);
-        gSaveContext.healthCapacity2 =
-            GetPlayerStat_GetModifiedHealthCapacity(gSaveContext.healthCapacity, actor->level);
+        gSaveContext.healthCapacity2 = GetPlayerStat_GetModifiedHealthCapacity(gSaveContext.healthCapacity, actor->level);
+        if (gSaveContext.health > gSaveContext.healthCapacity2)
+            gSaveContext.health = gSaveContext.healthCapacity2;
         gSaveContext.magicUnits = GetPlayerStat_MagicUnits(actor->level);
         Leveled_SetPlayerModifiedStats(player);
     } else {
@@ -2624,6 +2625,14 @@ void Actor_UpdateAll(PlayState* play, ActorContext* actorCtx) {
                     if (actor->category == ACTORCAT_ENEMY) {
                         actor->maximumHealth = actor->colChkInfo.health;
                     }
+
+                    if (actor->category != ACTORCAT_PLAYER) {
+                        Actor_GetLevelAndExperience(play, actor, 0);
+                        actor->colChkInfo.health = GetActorStat_EnemyMaxHealth(actor->colChkInfo.health, actor->level);
+                        actor->maximumHealth = actor->colChkInfo.health;
+                    }
+
+                    Actor_RefreshLeveledStats(actor, GET_PLAYER(play));
                 }
                 actor = actor->next;
             } else if (!Object_IsLoaded(&play->objectCtx, actor->objBankIndex)) {

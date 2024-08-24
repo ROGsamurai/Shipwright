@@ -18,6 +18,7 @@ extern "C" {
 #include "functions.h"
 #include "macros.h"
 #include "soh/Enhancements/randomizer/adult_trade_shuffle.h"
+#include "leveled_stat_math.h"
 extern PlayState* gPlayState;
 
 #include "textures/icon_item_static/icon_item_static.h"
@@ -339,6 +340,11 @@ void DrawInfoTab() {
     ImGui::InputScalar("Max Health", ImGuiDataType_S16, &healthIntermediary);
     if (ImGui::IsItemDeactivated()) {
         gSaveContext.healthCapacity = healthIntermediary;
+        
+        Player* player = GET_PLAYER(gPlayState);
+        gSaveContext.healthCapacity2 = GetPlayerStat_GetModifiedHealthCapacity(gSaveContext.healthCapacity, player->actor.level);
+        if (gSaveContext.health > gSaveContext.healthCapacity2)
+            gSaveContext.health = gSaveContext.healthCapacity2;
     }
     UIWidgets::InsertHelpHoverText("Maximum health. 16 units per full heart");
     if (gSaveContext.health > gSaveContext.healthCapacity2) {
