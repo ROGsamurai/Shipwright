@@ -4036,12 +4036,12 @@ s32 func_80837B18_modified(PlayState* play, Player* this, s32 damage, u8 modifie
         return 1;
     }
 
-    /* s32 modifiedDamage = damage;
+    s32 modifiedDamage = damage;
     if (modified) {
         modifiedDamage *= (1 << CVarGetInteger(CVAR_ENHANCEMENT("DamageMult"), 0));
-    }*/
+    }
 
-    return Health_ChangeBy(play, damage);
+    return Health_ChangeBy(play, modifiedDamage);
 }
 
 s32 func_80837B18(PlayState* play, Player* this, s32 damage) {
@@ -4080,7 +4080,7 @@ void func_80837C0C(PlayState* play, Player* this, s32 arg2, f32 arg3, f32 arg4, 
 
     Player_PlaySfx(this, NA_SE_PL_DAMAGE);
 
-    if (!func_80837B18(play, this, 0 - this->actor.colChkInfo.damage)) {
+    if (!func_80837B18_modified(play, this, 0 - this->actor.colChkInfo.damage, false)) {
         this->stateFlags2 &= ~PLAYER_STATE2_GRABBED_BY_ENEMY;
         if (!(this->actor.bgCheckFlags & 1) && !(this->stateFlags1 & PLAYER_STATE1_IN_WATER)) {
             func_80837B9C(this, play);
