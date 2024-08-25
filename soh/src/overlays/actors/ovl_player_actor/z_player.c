@@ -4310,7 +4310,7 @@ s32 func_808382DC(Player* this, PlayState* play) {
                 this->bodyShockTimer = 40;
             }
 
-            this->actor.colChkInfo.damage += this->unk_8A0;
+            this->actor.colChkInfo.damage += this->unk_8A0 << CVarGetInteger(CVAR_ENHANCEMENT("DamageMult"), 0);
             func_80837C0C(play, this, sp5C[this->unk_8A1 - 1], this->unk_8A4, this->unk_8A8, this->unk_8A2, 20);
         } else {
             sp64 = (this->shieldQuad.base.acFlags & AC_BOUNCED) != 0;

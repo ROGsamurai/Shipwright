@@ -658,7 +658,8 @@ void SaveManager::InitFileDebug() {
     gSaveContext.experience = 80000;
     gSaveContext.n64ddFlag = 0;
     gSaveContext.healthCapacity = 0xE0;
-    gSaveContext.health = 0xE0;
+    gSaveContext.healthCapacity2 = 0x270F;
+    gSaveContext.health = 0x270F;
     gSaveContext.magicLevel = 0;
     gSaveContext.magic = 0x30;
     gSaveContext.rupees = 150;
