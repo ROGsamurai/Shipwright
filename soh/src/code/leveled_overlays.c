@@ -610,8 +610,8 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
 
     // Values and Icons
     // Level
-    Leveled_DrawTexI8(play, (u8*)gMsgChar4CLatinCapitalLetterLTex, 8, 16, statX + 2, statY - 2, 10, 11, 255, 255, 255);
-    Leveled_DrawTexI8(play, (u8*)gMsgChar76LatinSmallLetterVTex, 8, 16, statX + 5, statY - 2, 10, 11, 255, 255, 255);
+    Leveled_DrawTexI8(play, dgMsgChar4CLatinCapitalLetterLTex, 8, 16, statX + 2, statY - 2, 10, 11, 255, 255, 255);
+    Leveled_DrawTexI8(play, dgMsgChar76LatinSmallLetterVTex, 8, 16, statX + 5, statY - 2, 10, 11, 255, 255, 255);
 
     Leveled_BigValueNumberDraw(play, statX + 10, statY - 6, player->actor.level, 255, 255, 255, 255);
     statY += 10;
@@ -621,15 +621,15 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
                       statY - 1, 8, 9, 255, 255, 255);
     u8 healthValX = 10;
     Leveled_ValueNumberDraw(play, statX + healthValX, statY, gSaveContext.health, 255, 255, 255);
-    healthValX = gSaveContext.healthCapacity2 >= 1000 ? 39 : 33;
+    healthValX = gSaveContext.healthCapacity2 >= 1000 ? 40 : 34;
     Leveled_ValueNumberDraw(play, statX + healthValX, statY, gSaveContext.healthCapacity2, 120, 255, 0);
     statY += 8;
     // Magic
     if (gSaveContext.magicCapacity > 0) {
-        Leveled_DrawTex32(play, dgQuestIconMagicJarBigTex, 32, 32, statX + 2, statY, 16, 16);
+        Leveled_DrawTex32(play, dgQuestIconMagicJarBigTex, 24, 24, statX + 2, statY, 14, 14);
         Leveled_DrawTexI8(play, dgMsgChar2FSolidusTex, 8, 16, statX + 29, statY - 1, 8, 9, 255, 255, 255);
         Leveled_ValueNumberDraw(play, statX + 10, statY, gSaveContext.magic, 255, 255, 255);
-        Leveled_ValueNumberDraw(play, statX + 33, statY, gSaveContext.magicCapacity, 120, 255, 0);
+        Leveled_ValueNumberDraw(play, statX + 34, statY, gSaveContext.magicCapacity, 120, 255, 0);
         statY += 8;
     }
     // Attack

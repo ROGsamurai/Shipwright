@@ -4409,7 +4409,7 @@ s32 func_808382DC(Player* this, PlayState* play) {
                     ((sp48 >= 0) && ((this->currentTunic != PLAYER_TUNIC_GORON && CVarGetInteger(CVAR_CHEAT("SuperTunic"), 0) == 0) ||
                                      (this->floorTypeTimer >= D_808544F4[sp48])))) {
                     this->floorTypeTimer = 0;
-                    this->actor.colChkInfo.damage = 4;
+                    this->actor.colChkInfo.damage = 4 << CVarGetInteger(CVAR_ENHANCEMENT("DamageMult"), 0);
                     func_80837C0C(play, this, 0, 4.0f, 5.0f, this->actor.shape.rot.y, 20);
                 } else {
                     return 0;
@@ -8656,7 +8656,7 @@ s32 func_80842DF4(PlayState* play, Player* this) {
                 func_80842B7C(play, this);
 
                 if (this->actor.colChkInfo.atHitEffect == 1) {
-                    this->actor.colChkInfo.damage = 8;
+                    this->actor.colChkInfo.damage = 8 << CVarGetInteger(CVAR_ENHANCEMENT("DamageMult"), 0);
                     func_80837C0C(play, this, 4, 0.0f, 0.0f, this->actor.shape.rot.y, 20);
                     return 1;
                 }
@@ -9276,7 +9276,7 @@ void Player_Action_80844A44(Player* this, PlayState* play) {
     Math_StepToF(&this->linearVelocity, 0.0f, 0.05f);
 
     if (this->actor.bgCheckFlags & 1) {
-        this->actor.colChkInfo.damage = 0x10;
+        this->actor.colChkInfo.damage = 0x10 << CVarGetInteger(CVAR_ENHANCEMENT("DamageMult"), 0);
         func_80837C0C(play, this, 1, 4.0f, 5.0f, this->actor.shape.rot.y, 20);
     }
 }
