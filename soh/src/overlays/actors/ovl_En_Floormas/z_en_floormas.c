@@ -738,6 +738,7 @@ void EnFloormas_SmDecideAction(EnFloormas* this, PlayState* play) {
 
 void EnFloormas_SmShrink(EnFloormas* this, PlayState* play) {
     if (Math_StepToF(&this->actor.scale.x, 0.0f, 0.0015f)) {
+        EnFloormas_SetupSmWait(this);
         EnFloormas* parent = (EnFloormas*)this->actor.parent;
         EnFloormas* child = (EnFloormas*)this->actor.child;
         if ((parent->actionFunc == EnFloormas_SmWait) && (child->actionFunc == EnFloormas_SmWait)) {
