@@ -2375,13 +2375,13 @@ extern "C" int GetLeveledNaviEnemyInfo(char* buffer, char* src, const int maxBuf
         postfix = "";
     } else {
         postfix = "";
-        if (CVarGetInteger("gLeveledNaviLevel", 1)) {
+        if (CVarGetInteger("gLeveled.Navi.TellEnemyLevel", 1)) {
             postfix += " \x05"
                        "F"
                        "Lv" +
                        std::to_string(actor->level);
         }
-        if (CVarGetInteger("gLeveledNaviMaxHP", 1) && actor->maximumHealth > 0) {
+        if (CVarGetInteger("gLeveled.Navi.TellEnemyMaxHP", 1) && actor->maximumHealth > 0) {
             postfix += " \x05"
                        "A"
                        "MaxHP " +

@@ -809,6 +809,9 @@ void Player_GainExperience(PlayState* play, u16 experience) {
     if (player == NULL)
         return;
 
+    
+    experience = (u16)(CLAMP(round((f32)experience * CVarGetFloat("gLeveled.Difficulty.EXP.Rate", (f32)1.0)), 0, 0xffff));
+
     bool levelUp = false;
     u8 prevPower = player->actor.power;
     u8 prevCourage = player->actor.courage;
@@ -843,9 +846,12 @@ void Player_GainExperience(PlayState* play, u16 experience) {
 
     if (levelUp) {
         gSaveContext.magicCapacity = gSaveContext.magicLevel * gSaveContext.magicUnits;
-        ActorLevelUp_New(&player->actor, player->actor.power - prevPower, player->actor.courage - prevCourage,
-                         gSaveContext.healthCapacity2 - prevHealthCapacity, gSaveContext.magicUnits - prevMagicUnits);
-        Audio_PlayFanfare(NA_BGM_ITEM_GET);
+        if (CVarGetInteger("gLeveled.HUD.LevelUp", 1) == 1) {
+            ActorLevelUp_New(&player->actor, player->actor.power - prevPower, player->actor.courage - prevCourage, gSaveContext.healthCapacity2 - prevHealthCapacity, gSaveContext.magicUnits - prevMagicUnits);
+        }
+        if (CVarGetInteger("gLeveled.HUD.LevelUpSound", 1) == 1) {
+            Audio_PlayFanfare(NA_BGM_ITEM_GET);
+        }
     }
 }
 

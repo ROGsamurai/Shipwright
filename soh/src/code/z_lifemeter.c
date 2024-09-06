@@ -385,10 +385,10 @@ void HealthMeter_Draw(PlayState* play) {
     f32 temp2;
     f32 temp3;
     f32 temp4;
-    u8 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+    u8 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
     if (heartUnits < 4) {
         heartUnits = 4;
-        CVarSetInteger("gLeveledHeartUnits", 1);
+        CVarSetInteger("gLeveled.Difficulty.HeartUnits", 1);
     }
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
     GraphicsContext* gfxCtx = play->state.gfxCtx;
@@ -668,7 +668,7 @@ void HealthMeter_HandleCriticalAlarm(PlayState* play) {
 u32 HealthMeter_IsCritical(void) {
     s32 var;
 
-    s32 heartValue = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+    s32 heartValue = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
 
     var = (s32)(heartValue + (f32)(((gSaveContext.healthCapacity2 / heartValue) - 3) * heartValue) * 0.103f);
 

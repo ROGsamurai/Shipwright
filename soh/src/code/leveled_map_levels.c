@@ -44,7 +44,10 @@ s8 Leveled_GetSceneLevel(s16 sceneId) {
     case SCENE_GANONDORF_BOSS:
 	case SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR:
 	case SCENE_GANON_BOSS:
-		return 50;
+        if (CVarGetInteger("gLeveled.Difficulty.Enemy.MaxLevelInGanonCastle", 0) == 1 && gSaveContext.inventory.gsTokens == 100)
+			return 120;
+        else
+			return 50;
 
 	case SCENE_GERUDO_TRAINING_GROUND: 
 		return 43;
