@@ -104,7 +104,7 @@ void Leveled_OverlayDrawTex4b(PlayState* play, void* texture, s16 textureWidth, 
 }
 
 void ActorDamageNumber_New(Actor* actor, u16 damage) {
-    if (damage == 0 || (actor->category == ACTORCAT_PLAYER && !CVarGetInteger("gLeveledFloatingNumberPlayerDamage", 1)) || (actor->category != ACTORCAT_PLAYER && !CVarGetInteger("gLeveledFloatingNumberEnemyDamage", 1)))
+    if (damage == 0 || (actor->category == ACTORCAT_PLAYER && !CVarGetInteger("gLeveled.HUD.FloatingNumbers.PlayerDamage", 1)) || (actor->category != ACTORCAT_PLAYER && !CVarGetInteger("gLeveled.HUD.FloatingNumbers.EnemyDamage", 1)))
         return;
 
     Vec2f position = { 0, 0 };
@@ -117,7 +117,7 @@ void ActorDamageNumber_New(Actor* actor, u16 damage) {
 }
 
 void ActorExperienceNumber_New(Actor* actor, u16 experience) {
-    if (experience == 0 || !CVarGetInteger("gLeveledFloatingNumberExpGain", 1))
+    if (experience == 0 || !CVarGetInteger("gLeveled.HUD.FloatingNumbers.ExpGain", 1))
         return;
 
 
@@ -682,7 +682,7 @@ void Leveled_Interface_DrawNextLevel(PlayState* play) {
     } else {
         return;
     }
-    if (play->pauseCtx.state != 0 || !CVarGetInteger("gLeveledHUDExperienceNextLevel", 1))
+    if (play->pauseCtx.state != 0 || !CVarGetInteger("gLeveled.HUD.ExperienceNextLevel", 1))
         return;
 
     Player* player = GET_PLAYER(play);

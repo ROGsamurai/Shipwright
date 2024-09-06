@@ -1666,7 +1666,7 @@ void Message_OpenText(PlayState* play, u16 textId) {
                 textId == 0x4D)) {
         Message_FindMessage(play, textId);
         msgCtx->msgLength = font->msgLength = GetEquipNowMessage(font->msgBuf, font->msgOffset, sizeof(font->msgBuf));
-    } else if ((CVarGetInteger("gLeveledNaviLevel", 1) || CVarGetInteger("gLeveledNaviMaxHP", 1)) &&
+    } else if ((CVarGetInteger("gLeveled.Navi.TellEnemyLevel", 1) || CVarGetInteger("gLeveled.Navi.TellEnemyMaxHP", 1)) &&
                (textId > 0x0600 && textId < 0x06FF) && play->actorCtx.targetCtx.targetedActor != NULL) {
         Message_FindMessage(play, textId);
         msgCtx->msgLength = font->msgLength = GetLeveledNaviEnemyInfo(
@@ -3371,7 +3371,7 @@ void Message_Update(PlayState* play) {
                 msgCtx->textboxEndType = TEXTBOX_ENDTYPE_DEFAULT;
             }
             if ((s32)(gSaveContext.inventory.questItems & 0xF0000000) == 0x40000000) {
-                s32 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+                s32 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
                 gSaveContext.inventory.questItems ^= 0x40000000;
                 if (!CVarGetInteger(CVAR_ENHANCEMENT("HurtContainer"), 0)) {
                     gSaveContext.healthCapacity += 0x10;

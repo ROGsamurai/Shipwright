@@ -49,11 +49,11 @@ u8 GetActorStat_PlayerCourage(u8 level) {
 }
 
 u16 GetActorStat_EnemyMaxHealth(u16 baseHealth, u8 level){ 
-    return GetActorStat_Attack(baseHealth * HEALTH_ATTACK_MULTIPLIER, GetActorStat_PlayerPower(level));
+    return (u16)(CLAMP((f32)GetActorStat_Attack(baseHealth * HEALTH_ATTACK_MULTIPLIER, GetActorStat_PlayerPower(level)) * CVarGetFloat("gLeveled.Difficulty.Enemy.HPPercent", 1.0f), 1, 0xffff));
 }
 
 u8 GetPlayerStat_BonusHearts(u8 level){
-    if (CVarGetInteger("gLeveledHeartsWithLevelUp", 1) == 0){
+    if (CVarGetInteger("gLeveled.Player.Enhancements.HeartsWithLevelUp", 1) == 0){
         return 0;
     }
 
@@ -65,7 +65,7 @@ u8 GetPlayerStat_BonusHearts(u8 level){
 }
 
 u8 GetPlayerStat_MagicUnits(u8 level){
-    if (CVarGetInteger("gLeveledMagicWithLevelUp", 1) == 0){
+    if (CVarGetInteger("gLeveled.Player.Enhancements.MagicWithLevelUp", 1) == 0){
         return 48;
     }
 
@@ -77,7 +77,7 @@ u8 GetPlayerStat_MagicUnits(u8 level){
 }
 
 u16 GetPlayerStat_GetModifiedHealthCapacity(u16 baseHealth, u8 level){
-    s32 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+    s32 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
     u16 baseHearts = baseHealth / 16;
     return (baseHearts + GetPlayerStat_BonusHearts(level)) * heartUnits;
 }
@@ -124,7 +124,7 @@ f32 Leveled_DamageFormula(f32 attack, u8 power, u8 courage) {
 f32 Leveled_DamageFormulaOnPlayer(f32 attack, u8 power, u8 courage) {
     f32 damage = attack;
     
-    if (CVarGetInteger("gLeveledEnemyAttackScalesWithLevel", 1) == 1){
+    if (CVarGetInteger("gLeveled.Enemy.Enhancements.AttackScalesWithLevel", 1) == 1){
         damage = GetActorStat_EnemyAttack(attack, power);
 
         if (power >= courage) {
@@ -179,7 +179,7 @@ u16 Leveled_GoldSkulltulaExperience(u8 tokens) {
     u8 i;
 
     for (i = 0; i < tokens; i++) {
-        experience += 5 + 5 * (u16)((f32)i / 10.0);
+        experience += 5 + 5 * (u16)(CVarGetFloat("gLeveled.Difficulty.EXP.TokenRate", 1.0f) * (f32) i / (f32)10.0);
     }
     return experience;
 }
@@ -188,7 +188,7 @@ void Leveled_SetPlayerModifiedStats(Player* player) {
     s8 powerModifier = 0;
     s8 courageModifier = 0;
 
-    if (CVarGetInteger("gLeveledEquipmentStats", 1) == 1){
+    if (CVarGetInteger("gLeveled.Player.Enhancements.EquipmentStats", 1) == 1){
         switch (CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD)){
             case PLAYER_SWORD_MASTER:
                 courageModifier += 1;

@@ -8909,10 +8909,10 @@ void func_80843AE8(PlayState* play, Player* this) {
                 }
                 if (CVarGetInteger(CVAR_ENHANCEMENT("FairyReviveEffect"), 0)) {
                     if (CVarGetInteger(CVAR_ENHANCEMENT("FairyRevivePercentRestore"), 0)) {
-                        s32 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+                        s32 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
                         gSaveContext.healthAccumulator = heartUnits + ((gSaveContext.healthCapacity2 - heartUnits) * CVarGetInteger(CVAR_ENHANCEMENT("FairyReviveHealth"), 100) / 100);
                     } else {
-                        s32 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+                        s32 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
                         gSaveContext.healthAccumulator = CVarGetInteger(CVAR_ENHANCEMENT("FairyReviveHealth"), 20) * heartUnits;
                     }
                 } else {
@@ -13818,7 +13818,7 @@ void Player_Action_8084EAC0(Player* this, PlayState* play) {
         if (this->av2.actionVar2 == 0) {
             if (this->itemAction == PLAYER_IA_BOTTLE_POE) {
                 s32 rand = Rand_S16Offset(-1, 3);
-                s32 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+                s32 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
 
                 if (rand == 0) {
                     rand = 3;
@@ -13838,19 +13838,19 @@ void Player_Action_8084EAC0(Player* this, PlayState* play) {
 
                 if (CVarGetInteger(CVAR_ENHANCEMENT("RedPotionEffect"), 0) && this->itemAction == PLAYER_IA_BOTTLE_POTION_RED) {
                     if (CVarGetInteger(CVAR_ENHANCEMENT("RedPercentRestore"), 0)) {
-                        s32 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+                        s32 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
                         gSaveContext.healthAccumulator = (gSaveContext.healthCapacity2 - heartUnits) * CVarGetInteger(CVAR_ENHANCEMENT("RedPotionHealth"), 100) / 100;
                     } else {
-                        s32 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+                        s32 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
                         gSaveContext.healthAccumulator = CVarGetInteger(CVAR_ENHANCEMENT("RedPotionHealth"), 20) * heartUnits;
                     }
                 } else if (CVarGetInteger(CVAR_ENHANCEMENT("BluePotionEffects"), 0) &&
                            this->itemAction == PLAYER_IA_BOTTLE_POTION_BLUE) {
                     if (CVarGetInteger(CVAR_ENHANCEMENT("BlueHealthPercentRestore"), 0)) {
-                        s32 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+                        s32 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
                         gSaveContext.healthAccumulator = (gSaveContext.healthCapacity2 - heartUnits) * CVarGetInteger(CVAR_ENHANCEMENT("BluePotionHealth"), 100) / 100;
                     } else {
-                        s32 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+                        s32 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
                         gSaveContext.healthAccumulator = CVarGetInteger(CVAR_ENHANCEMENT("BluePotionHealth"), 20) * heartUnits;
                     }
 
@@ -13893,19 +13893,19 @@ void Player_Action_8084EAC0(Player* this, PlayState* play) {
                 } else if (CVarGetInteger(CVAR_ENHANCEMENT("MilkEffect"), 0) && (this->itemAction == PLAYER_IA_BOTTLE_MILK_FULL ||
                                                              this->itemAction == PLAYER_IA_BOTTLE_MILK_HALF)) {
                     if (CVarGetInteger(CVAR_ENHANCEMENT("MilkPercentRestore"), 0)) {
-                        s32 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+                        s32 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
                         gSaveContext.healthAccumulator = (gSaveContext.healthCapacity2 - heartUnits) * CVarGetInteger(CVAR_ENHANCEMENT("MilkHealth"), 100) / 100;
                     } else {
-                        s32 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+                        s32 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
                         gSaveContext.healthAccumulator = CVarGetInteger(CVAR_ENHANCEMENT("MilkHealth"), 5) * heartUnits;
                     }
                     if (CVarGetInteger(CVAR_ENHANCEMENT("SeparateHalfMilkEffect"), 0) &&
                         this->itemAction == PLAYER_IA_BOTTLE_MILK_HALF) {
                         if (CVarGetInteger(CVAR_ENHANCEMENT("HalfMilkPercentRestore"), 0)) {
-                            s32 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+                            s32 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
                             gSaveContext.healthAccumulator = (gSaveContext.healthCapacity2 - heartUnits) * CVarGetInteger(CVAR_ENHANCEMENT("HalfMilkHealth"), 100) / 100;
                         } else {
-                            s32 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+                            s32 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
                             gSaveContext.healthAccumulator = CVarGetInteger(CVAR_ENHANCEMENT("HalfMilkHealth"), 5) * heartUnits;
                         }
                     }
@@ -13919,7 +13919,7 @@ void Player_Action_8084EAC0(Player* this, PlayState* play) {
                     }
 
                     if (sp28 & 4) {
-                        s32 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+                        s32 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
                         gSaveContext.healthAccumulator = heartUnits * 5;
                     }
                 }
@@ -14039,11 +14039,11 @@ void Player_Action_8084EED8(Player* this, PlayState* play) {
     } else if (LinkAnimation_OnFrame(&this->skelAnime, 47.0f)) {
         if (CVarGetInteger(CVAR_ENHANCEMENT("FairyEffect"), 0)) {
             if (CVarGetInteger(CVAR_ENHANCEMENT("FairyPercentRestore"), 0)) {
-                s32 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+                s32 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
                 gSaveContext.healthAccumulator =
                     (gSaveContext.healthCapacity2) * CVarGetInteger(CVAR_ENHANCEMENT("FairyHealth"), 100) / 100;
             } else {
-                s32 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+                s32 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
                 gSaveContext.healthAccumulator = CVarGetInteger(CVAR_ENHANCEMENT("FairyHealth"), 8) * heartUnits;
             }
         } else {

@@ -2356,7 +2356,7 @@ u8 Item_Give(PlayState* play, u8 item) {
         gSaveContext.sohStats.heartPieces++;
         return Return_Item(item, MOD_NONE, ITEM_NONE);
     } else if (item == ITEM_HEART_CONTAINER) {
-        s32 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+        s32 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
         if (!CVarGetInteger(CVAR_ENHANCEMENT("HurtContainer"), 0)) {
             gSaveContext.healthCapacity += 0x10;
             gSaveContext.health += heartUnits;
@@ -2372,7 +2372,7 @@ u8 Item_Give(PlayState* play, u8 item) {
     } else if (item == ITEM_HEART) {
         osSyncPrintf("回復ハート回復ハート回復ハート\n"); // "Recovery Heart"
         if (play != NULL) {
-            s32 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+            s32 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
             Health_ChangeBy(play, heartUnits);
         }
         return Return_Item(item, MOD_NONE, item);
@@ -3197,7 +3197,7 @@ s32 Health_ChangeBy(PlayState* play, s16 healthChange) {
         gSaveContext.health = gSaveContext.healthCapacity2;
     }
 
-    heartCount = gSaveContext.health / CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+    heartCount = gSaveContext.health / CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
 
     healthLevel = heartCount;
     if (heartCount != 0) {
@@ -3752,7 +3752,7 @@ void Interface_DrawMagicBar(PlayState* play) {
             } else if (CVarGetInteger(CVAR_COSMETIC("HUD.MagicBar.PosType"), 0) == 5) {//Anchor To life meter
                 magicBarY = R_MAGIC_BAR_SMALL_Y-2 +
                     magicDrop * (lineLength == 0 ? 0 : (gSaveContext.healthCapacity2 - 1) / 
-                        ((CVarGetInteger("gLeveledHeartUnits", 4) << 2) * lineLength)) +
+                        ((CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2) * lineLength)) +
                             CVarGetInteger("gMagicBarPosY", 0) + getHealthMeterYOffset();
                 s16 xPushover = CVarGetInteger(CVAR_COSMETIC("HUD.MagicBar.PosX"), 0) + getHealthMeterXOffset() + R_MAGIC_BAR_X-1;
                 PosX_Start = xPushover;
@@ -3761,11 +3761,11 @@ void Interface_DrawMagicBar(PlayState* play) {
                 rMagicFillX = CVarGetInteger(CVAR_COSMETIC("HUD.MagicBar.PosX"), 0) + getHealthMeterXOffset() + R_MAGIC_FILL_X-1;
             }
         } else {
-            if ((gSaveContext.healthCapacity2 - 1) / (CVarGetInteger("gLeveledHeartUnits", 4) << 2) >= lineLength &&
+            if ((gSaveContext.healthCapacity2 - 1) / (CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2) >= lineLength &&
                 lineLength != 0) {
                 magicBarY = magicBarY_original_l +
                     magicDrop * (lineLength == 0 ? 0 : ((gSaveContext.healthCapacity2 - 1) /
-                        ((CVarGetInteger("gLeveledHeartUnits", 4) << 2) * lineLength) - 1));
+                        ((CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2) * lineLength) - 1));
             } else {
                 magicBarY = magicBarY_original_s;
             }
@@ -6002,7 +6002,7 @@ void Interface_Draw(PlayState* play) {
                 case 1:
                     D_8015FFE2 = 20;
                     D_8015FFE0 = 20;
-                    u8 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+                    u8 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
                     gSaveContext.timer1Value = (s32)((f32)gSaveContext.health / heartUnits * 8);
                     gSaveContext.timer1State = 2;
                     break;
@@ -6653,7 +6653,7 @@ void Interface_Update(PlayState* play) {
     Map_Update(play);
 
     if (gSaveContext.healthAccumulator != 0) {
-        s32 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+        s32 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
         gSaveContext.healthAccumulator -= heartUnits >> 2;
         gSaveContext.health += heartUnits >> 2;
 
@@ -6806,7 +6806,7 @@ void Interface_Update(PlayState* play) {
     }
 
     if (gSaveContext.timer1State == 0) {
-        u8 heartUnits = CVarGetInteger("gLeveledHeartUnits", 4) << 2;
+        u8 heartUnits = CVarGetInteger("gLeveled.Difficulty.HeartUnits", 4) << 2;
         if (((D_80125A58 == 1) || (D_80125A58 == 2) || (D_80125A58 == 4)) && (((s32)((f32)gSaveContext.health / heartUnits * 8)) != 0)) {
             gSaveContext.timer1State = 1;
             gSaveContext.timerX[0] = 140;
