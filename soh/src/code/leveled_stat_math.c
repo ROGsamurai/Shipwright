@@ -179,9 +179,9 @@ u16 Leveled_GoldSkulltulaExperience(u8 tokens) {
     u8 i;
 
     for (i = 0; i < tokens; i++) {
-        experience += 5 + 5 * (u16)(CVarGetFloat("gLeveled.Difficulty.EXP.TokenRate", 1.0f) * (f32) i / (f32)10.0);
+        experience += 5 + 5 * i / (f32)10.0;
     }
-    return experience;
+    return (u16)((f32)experience * CVarGetFloat("gLeveled.Difficulty.EXP.TokenRate", 1.0f));
 }
 
 void Leveled_SetPlayerModifiedStats(Player* player) {
