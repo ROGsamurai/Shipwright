@@ -434,7 +434,7 @@ void Actor_LevelUpDraw(PlayState* play, Actor* actor) {
         }
         
         if (i == 6) {
-            OVERLAY_DISP = Gfx_Texture32(OVERLAY_DISP, dgQuestIconMagicJarBigTex, 32, 32, (s16)spBC.x, (s16)spBC.y, 32, 32, 4098, 4098); 
+            OVERLAY_DISP = Gfx_Texture32(OVERLAY_DISP, dgQuestIconMagicJarBigTex, 24, 24, (s16)spBC.x, (s16)spBC.y, 24, 24, 3072, 3072); 
         }
 
         CLOSE_DISPS(play->state.gfxCtx);
