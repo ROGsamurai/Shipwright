@@ -1245,7 +1245,7 @@ void BossGanondrof_CollisionCheck(BossGanondrof* this, PlayState* play) {
                         dmg = CollisionCheck_GetSwordDamage(dmgFlags, play);
                         (dmg == 0) ? (dmg = 2) : (canKill = true);
 
-                        dmg = Leveled_DamageModify(&this->actor, &GET_PLAYER(play)->actor, dmg * HEALTH_ATTACK_MULTIPLIER);
+                        dmg = Leveled_DamageModify(&this->actor, &GET_PLAYER(play)->actor, dmg * Leveled_GetHealthAttackMultiplier());
                         ActorDamageNumber_New(&this->actor, dmg);
                         if ((this->actor.colChkInfo.health > 2) || canKill) {
                             if (dmg < this->actor.colChkInfo.health) {
@@ -1277,7 +1277,7 @@ void BossGanondrof_CollisionCheck(BossGanondrof* this, PlayState* play) {
                 }
             } else if (acHit && (hurtbox->toucher.dmgFlags & 0x0001F8A4)) {
                 this->work[GND_INVINC_TIMER] = 10;
-                u16 dmg = Leveled_DamageModify(&this->actor, &GET_PLAYER(play)->actor, 2 * HEALTH_ATTACK_MULTIPLIER);
+                u16 dmg = Leveled_DamageModify(&this->actor, &GET_PLAYER(play)->actor, 2 * Leveled_GetHealthAttackMultiplier());
                 ActorDamageNumber_New(&this->actor, dmg);
                 if (dmg < this->actor.colChkInfo.health) {
                     this->actor.colChkInfo.health -= dmg;

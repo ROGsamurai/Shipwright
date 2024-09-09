@@ -2082,6 +2082,8 @@ void DrawLeveledMenu() {
 
                 ImGui::EndMenu();
             }
+            UIWidgets::EnhancementSliderInt("Enemy HP and Link's Attack Multiplier: %dx", "##LeveledHPandAttackDamageMultiplier", "gLeveled.Enhancements.AttackAndHPMultiplier", 1, 32, "", 9, true, false);
+            UIWidgets::Tooltip("Changes Link's Attack and enemy HP multiplier. This doesn't change balance, but rather the size of numbers.");
             ImGui::EndMenu();
         }
 

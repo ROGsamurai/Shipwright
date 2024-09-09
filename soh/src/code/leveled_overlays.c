@@ -599,13 +599,13 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
     Color_RGBA8 textColor = { 255, 255, 255, 255 };
 
     if (CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == 1)
-        attack = HEALTH_ATTACK_MULTIPLIER;
+        attack = Leveled_GetHealthAttackMultiplier();
     if (CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == 2)
-        attack = HEALTH_ATTACK_MULTIPLIER << 1;
+        attack = Leveled_GetHealthAttackMultiplier() << 1;
     if (CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == 3) {
-        attack = HEALTH_ATTACK_MULTIPLIER << 2;
+        attack = Leveled_GetHealthAttackMultiplier() << 2;
         if (gBitFlags[3] & gSaveContext.inventory.equipment)
-            attack = HEALTH_ATTACK_MULTIPLIER;
+            attack = Leveled_GetHealthAttackMultiplier();
     }
 
     // Values and Icons
