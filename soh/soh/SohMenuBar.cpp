@@ -2087,26 +2087,35 @@ void DrawLeveledMenu() {
 
         
         if (ImGui::BeginMenu("Difficulty Options")) {
-            if (ImGui::BeginMenu("Heart Container Value in Units")) {
-                UIWidgets::EnhancementRadioButton("4 (x0.25)", "gLeveled.Difficulty.HeartUnits", 1);
-                UIWidgets::EnhancementRadioButton("8 (x0.5)", "gLeveled.Difficulty.HeartUnits", 2);
-                UIWidgets::EnhancementRadioButton("12 (x0.75)", "gLeveled.Difficulty.HeartUnits", 3);
-                UIWidgets::EnhancementRadioButton("16 (Vanilla)", "gLeveled.Difficulty.HeartUnits", 4);
-                UIWidgets::EnhancementRadioButton("20 (x1.25)", "gLeveled.Difficulty.HeartUnits", 5);
-                UIWidgets::EnhancementRadioButton("24 (x1.5)", "gLeveled.Difficulty.HeartUnits", 6);
-                UIWidgets::EnhancementRadioButton("28 (x1.75)", "gLeveled.Difficulty.HeartUnits", 7);
-                UIWidgets::EnhancementRadioButton("32 (x2)", "gLeveled.Difficulty.HeartUnits", 8);
-                UIWidgets::EnhancementRadioButton("48 (x3)", "gLeveled.Difficulty.HeartUnits", 12);
-                UIWidgets::EnhancementRadioButton("64 (x4)", "gLeveled.Difficulty.HeartUnits", 16);
-                UIWidgets::EnhancementRadioButton("80 (x5)", "gLeveled.Difficulty.HeartUnits", 20);
-                UIWidgets::EnhancementRadioButton("96 (x6)", "gLeveled.Difficulty.HeartUnits", 24);
-                UIWidgets::EnhancementRadioButton("112 (x7)", "gLeveled.Difficulty.HeartUnits", 28);
-                UIWidgets::EnhancementRadioButton("128 (x8)", "gLeveled.Difficulty.HeartUnits", 32);
+            if (ImGui::BeginMenu("Player Options")) {
+                if (ImGui::BeginMenu("Heart Container Value in Units")) {
+                    UIWidgets::EnhancementRadioButton("4 (x0.25)", "gLeveled.Difficulty.HeartUnits", 1);
+                    UIWidgets::EnhancementRadioButton("8 (x0.5)", "gLeveled.Difficulty.HeartUnits", 2);
+                    UIWidgets::EnhancementRadioButton("12 (x0.75)", "gLeveled.Difficulty.HeartUnits", 3);
+                    UIWidgets::EnhancementRadioButton("16 (Vanilla)", "gLeveled.Difficulty.HeartUnits", 4);
+                    UIWidgets::EnhancementRadioButton("20 (x1.25)", "gLeveled.Difficulty.HeartUnits", 5);
+                    UIWidgets::EnhancementRadioButton("24 (x1.5)", "gLeveled.Difficulty.HeartUnits", 6);
+                    UIWidgets::EnhancementRadioButton("28 (x1.75)", "gLeveled.Difficulty.HeartUnits", 7);
+                    UIWidgets::EnhancementRadioButton("32 (x2)", "gLeveled.Difficulty.HeartUnits", 8);
+                    UIWidgets::EnhancementRadioButton("48 (x3)", "gLeveled.Difficulty.HeartUnits", 12);
+                    UIWidgets::EnhancementRadioButton("64 (x4)", "gLeveled.Difficulty.HeartUnits", 16);
+                    UIWidgets::EnhancementRadioButton("80 (x5)", "gLeveled.Difficulty.HeartUnits", 20);
+                    UIWidgets::EnhancementRadioButton("96 (x6)", "gLeveled.Difficulty.HeartUnits", 24);
+                    UIWidgets::EnhancementRadioButton("112 (x7)", "gLeveled.Difficulty.HeartUnits", 28);
+                    UIWidgets::EnhancementRadioButton("128 (x8)", "gLeveled.Difficulty.HeartUnits", 32);
+                    ImGui::EndMenu();
+                }
+                UIWidgets::Tooltip(
+                    "Sets how many health units each completed heart container is worth.\nOne heart on the "
+                    "health meter is equal to 16 health units.\nA lower setting results in lower total health.");
+
+                
+                ImGui::Text("Damage Multiplier: %.2fx", (float)CVarGetInteger("gLeveled.Difficulty.Player.DamageMultiplier", 4) / 4.0f);
+                ImGui::SameLine();
+                UIWidgets::EnhancementSliderInt("", "##LeveledPlayerDamageMultiplier", "gLeveled.Difficulty.Player.DamageMultiplier", 1, 32, "", 4, true, false);
+                UIWidgets::Tooltip("Sets a multiplier for the damage the player takes. Includes ALL sources, even damage while being frozen or burned.\nDamage cannot be reduced below 1.");
                 ImGui::EndMenu();
             }
-            UIWidgets::Tooltip(
-                "Sets how many health units each completed heart container is worth.\nOne heart on the "
-                "health meter is equal to 16 health units.\nA lower setting results in lower total health.");
 
             if (ImGui::BeginMenu("EXP Options")) {
                 UIWidgets::PaddedEnhancementSliderFloat("EXP Rate: %.1f %%", "##Leveled_EXPRate", "gLeveled.Difficulty.EXP.Rate", 0.0f, 10.0f, "", 1.0f, true, true, false, false);
