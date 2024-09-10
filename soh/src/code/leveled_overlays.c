@@ -434,7 +434,7 @@ void Actor_LevelUpDraw(PlayState* play, Actor* actor) {
         }
         
         if (i == 6) {
-            OVERLAY_DISP = Gfx_Texture32(OVERLAY_DISP, dgQuestIconMagicJarBigTex, 32, 32, (s16)spBC.x, (s16)spBC.y, 32, 32, 4098, 4098); 
+            OVERLAY_DISP = Gfx_Texture32(OVERLAY_DISP, dgQuestIconMagicJarBigTex, 24, 24, (s16)spBC.x, (s16)spBC.y, 24, 24, 3072, 3072); 
         }
 
         CLOSE_DISPS(play->state.gfxCtx);
@@ -599,13 +599,13 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
     Color_RGBA8 textColor = { 255, 255, 255, 255 };
 
     if (CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == 1)
-        attack = HEALTH_ATTACK_MULTIPLIER;
+        attack = Leveled_GetHealthAttackMultiplier();
     if (CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == 2)
-        attack = HEALTH_ATTACK_MULTIPLIER << 1;
+        attack = Leveled_GetHealthAttackMultiplier() << 1;
     if (CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD) == 3) {
-        attack = HEALTH_ATTACK_MULTIPLIER << 2;
+        attack = Leveled_GetHealthAttackMultiplier() << 2;
         if (gBitFlags[3] & gSaveContext.inventory.equipment)
-            attack = HEALTH_ATTACK_MULTIPLIER;
+            attack = Leveled_GetHealthAttackMultiplier();
     }
 
     // Values and Icons

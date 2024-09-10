@@ -3188,6 +3188,9 @@ s32 Health_ChangeBy(PlayState* play, s16 healthChange) {
     }
 
     if (healthChange < 0) {
+        healthChange = (f32)healthChange * (f32)CVarGetInteger("gLeveled.Difficulty.Player.DamageMultiplier", 4) / 4.0f;
+        if (healthChange >= 0)
+            healthChange = -1;
         ActorDamageNumber_New(GET_PLAYER(play), -healthChange);
     }
 

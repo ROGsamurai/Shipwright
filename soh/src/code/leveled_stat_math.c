@@ -20,6 +20,10 @@ static u32 sExpTable[] = { 0,      30,     64,     105,    155,    217,    292, 
   439224, 458796, 478997, 499839, 521336, 543501, 566346, 589885, 614131, 639098, 664799,
   691249, 718461, 746448, 775226, 804807, 835208, 866441, 898523, 931466, 965287, 999999 };*/
 
+u8 Leveled_GetHealthAttackMultiplier() {
+    return CLAMP(CVarGetInteger("gLeveled.Enhancements.AttackAndHPMultiplier", 9), 1, 32);
+}
+
 u16 GetActorStat_DisplayAttack(u16 attack, u8 power) {
     return GetActorStat_Attack(attack, power) / (1 + (float)power / 30.0f);
 }
@@ -49,7 +53,7 @@ u8 GetActorStat_PlayerCourage(u8 level) {
 }
 
 u16 GetActorStat_EnemyMaxHealth(u16 baseHealth, u8 level){ 
-    return (u16)(CLAMP((f32)GetActorStat_Attack(baseHealth * HEALTH_ATTACK_MULTIPLIER, GetActorStat_PlayerPower(level)) * CVarGetFloat("gLeveled.Difficulty.Enemy.HPPercent", 1.0f), 1, 0xffff));
+    return (u16)(CLAMP((f32)GetActorStat_Attack(baseHealth * Leveled_GetHealthAttackMultiplier(), GetActorStat_PlayerPower(level)) * CVarGetFloat("gLeveled.Difficulty.Enemy.HPPercent", 1.0f), 1, 0xffff));
 }
 
 u8 GetPlayerStat_BonusHearts(u8 level){

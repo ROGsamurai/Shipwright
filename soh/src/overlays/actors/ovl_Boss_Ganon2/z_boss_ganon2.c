@@ -1994,7 +1994,7 @@ void func_80902524(BossGanon2* this, PlayState* play) {
             }
             u8 baseDamage = phi_v1_2;
 
-            phi_v1_2 = Leveled_DamageModify(&this->actor, &GET_PLAYER(play)->actor, phi_v1_2 * HEALTH_ATTACK_MULTIPLIER);
+            phi_v1_2 = Leveled_DamageModify(&this->actor, &GET_PLAYER(play)->actor, phi_v1_2 * Leveled_GetHealthAttackMultiplier());
             if (phi_v1_2 <= this->actor.colChkInfo.health) {
                 this->actor.colChkInfo.health -= phi_v1_2;
             } else {

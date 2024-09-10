@@ -3052,7 +3052,7 @@ void CollisionCheck_ApplyDamage(PlayState* play, CollisionCheckContext* colChkCt
         Actor* attacker = collider->ac;
 
         if (collider->actor->category != ACTORCAT_PLAYER) {
-            damage *= HEALTH_ATTACK_MULTIPLIER;
+            damage *= Leveled_GetHealthAttackMultiplier();
         } else {
             damage *= (1 << CVarGetInteger(CVAR_ENHANCEMENT("DamageMult"), 0));
         }
