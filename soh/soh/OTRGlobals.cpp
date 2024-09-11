@@ -334,9 +334,8 @@ OTRGlobals::OTRGlobals() {
     context->InitWindow({ sohInputEditorWindow });
 
     auto overlay = context->GetInstance()->GetWindow()->GetGui()->GetGameOverlay();
-    overlay->LoadFont("Press Start 2P", "fonts/PressStart2P-Regular.ttf", 12.0f);
-    overlay->LoadFont("Fipps", "fonts/Fipps-Regular.otf", 32.0f);
-    overlay->SetCurrentFont(CVarGetString(CVAR_GAME_OVERLAY_FONT, "Press Start 2P"));
+    overlay->LoadFont("Leveled +", "fonts/Leveled-Regular.otf", 16.0f);
+    overlay->SetCurrentFont(CVarGetString(CVAR_GAME_OVERLAY_FONT, "Leveled +"));
 
     context->InitAudio();
 
@@ -2353,6 +2352,50 @@ extern "C" int GetEquipNowMessage(char* buffer, char* src, const int maxBufferSi
         FixedBaseStr = FixedBaseStr.substr(0, RemoveControlChar);
     }
     str = FixedBaseStr + postfix;
+
+    if (!str.empty()) {
+        memset(buffer, 0, maxBufferSize);
+        const int copiedCharLen = std::min<int>(maxBufferSize - 1, str.length());
+        memcpy(buffer, str.c_str(), copiedCharLen);
+        return copiedCharLen;
+    }
+    return 0;
+}
+
+extern "C" int GetLeveledNaviEnemyInfo(char* buffer, char* src, const int maxBufferSize, Actor* actor) {
+    std::string postfix;
+
+    if (!actor)
+        return 0;
+
+    if (gSaveContext.language == LANGUAGE_FRA) {
+        postfix = "";
+    } else if (gSaveContext.language == LANGUAGE_GER) {
+        postfix = "";
+    } else {
+        postfix = "";
+        if (CVarGetInteger("gLeveled.Navi.TellEnemyLevel", 1)) {
+            postfix += " \x05"
+                       "F"
+                       "Lv" +
+                       std::to_string(actor->level);
+        }
+        if (CVarGetInteger("gLeveled.Navi.TellEnemyMaxHP", 1) && actor->maximumHealth > 0) {
+            postfix += " \x05"
+                       "A"
+                       "MaxHP " +
+                       std::to_string(actor->maximumHealth);
+        }
+    }
+    std::string str;
+    std::string FixedBaseStr(src);
+    int FoundControlChar = FixedBaseStr.find_first_of("\x01");
+
+    if (FoundControlChar != std::string::npos) {
+        FixedBaseStr = FixedBaseStr.insert(FoundControlChar, postfix);
+    }
+
+    str = FixedBaseStr;
 
     if (!str.empty()) {
         memset(buffer, 0, maxBufferSize);
