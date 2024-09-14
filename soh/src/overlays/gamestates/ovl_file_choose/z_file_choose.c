@@ -15,6 +15,7 @@
 #include <GameVersions.h>
 #include "objects/object_mag/object_mag.h"
 #include "objects/gameplay_keep/gameplay_keep.h"
+#include "leveled_assets.h"
 #include "soh_assets.h"
 #include "soh/Enhancements/game-interactor/GameInteractor.h"
 #include "soh/Enhancements/boss-rush/BossRush.h"
@@ -78,7 +79,6 @@ static ItemData itemData[88] = {
     {CREATE_SPRITE_32(dgItemIconArrowFireTex, 4),          ITEM_ARROW_FIRE,       INV_IC_POS(4, 0), SIZE_NORMAL},
     {CREATE_SPRITE_32(dgItemIconDinsFireTex, 5),           ITEM_DINS_FIRE,        INV_IC_POS(5, 0), SIZE_NORMAL},
     {CREATE_SPRITE_32(dgItemIconBottleEmptyTex, 20),       ITEM_BOTTLE,           INV_IC_POS(6, 0), SIZE_NORMAL},
-
     {CREATE_SPRITE_32(dgItemIconSlingshotTex, 6),          ITEM_SLINGSHOT,        INV_IC_POS(0, 1), SIZE_NORMAL},
     {CREATE_SPRITE_32(dgItemIconOcarinaFairyTex, 7),       ITEM_OCARINA_FAIRY,    INV_IC_POS(1, 1), SIZE_NORMAL},
     {CREATE_SPRITE_32(dgItemIconOcarinaOfTimeTex, 7),      ITEM_OCARINA_TIME,     INV_IC_POS(1, 1), SIZE_NORMAL},
@@ -692,12 +692,14 @@ void FileChoose_DrawTextureI8(GraphicsContext* gfxCtx, const void* texture, s16 
     CLOSE_DISPS(gfxCtx);
 }
 
-void FileChoose_DrawImageRGBA32(GraphicsContext* gfxCtx, s16 centerX, s16 centerY, const char* source, u32 width, u32 height) {
+void LeveledFileChoose_DrawImageRGBA32(GraphicsContext* gfxCtx, s16 centerX, s16 centerY, const char* source, u32 width,
+                                u32 height) {
     u8* curTexture;
     s32 textureCount;
     u32 rectLeft;
     u32 rectTop;
     u32 textureHeight;
+    u32 textureWidth;
     s32 remainingSize;
     s32 textureSize;
     s32 pad;
@@ -707,7 +709,38 @@ void FileChoose_DrawImageRGBA32(GraphicsContext* gfxCtx, s16 centerX, s16 center
 
     rectLeft = centerX - (width / 2);
     rectTop = centerY - (height / 2);
-    
+
+    gDPSetTileCustom(POLY_OPA_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_32b, width, height, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+                     G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+
+    gDPSetTextureImage(POLY_OPA_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_32b, width, source);
+
+    gDPLoadSync(POLY_OPA_DISP++);
+    gDPLoadTile(POLY_OPA_DISP++, G_TX_LOADTILE, 0, 0, (width - 1) << 2, (height - 1) << 2);
+
+    gSPTextureRectangle(POLY_OPA_DISP++, rectLeft << 2, rectTop << 2, (rectLeft + (s32)width) << 2,
+                        (rectTop + height) << 2, G_TX_RENDERTILE, 0, 0, 3 << 10, 3 << 10);
+    CLOSE_DISPS(gfxCtx);
+}
+
+void FileChoose_DrawImageRGBA32(GraphicsContext* gfxCtx, s16 centerX, s16 centerY, const char* source, u32 width, u32 height) {
+    u8* curTexture;
+    s32 textureCount;
+    u32 rectLeft;
+    u32 rectTop;
+    u32 textureHeight;
+    u32 textureWidth;
+    s32 remainingSize;
+    s32 textureSize;
+    s32 pad;
+    s32 i;
+
+    OPEN_DISPS(gfxCtx);
+
+    rectLeft = centerX - (width / 2);
+    rectTop = centerY - (height / 2);
+
+
     gDPSetTileCustom(POLY_OPA_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_32b, width, height, 0, G_TX_NOMIRROR | G_TX_CLAMP,
                      G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
     
@@ -1936,26 +1969,78 @@ void FileChoose_SetWindowContentVtx(GameState* thisx) {
 
     phi_t2 += 8;
     // Level count
-    phi_t0 = this->windowPosX + 30;
-    temp_t1 = 24;
-    for (phi_a1 = 0; phi_a1 < 2; phi_a1++, phi_t2 += 4) {
-        this->windowContentVtx[phi_t2].v.ob[0] = this->windowContentVtx[phi_t2 + 2].v.ob[0] = phi_t0;
-        this->windowContentVtx[phi_t2 + 1].v.ob[0] = this->windowContentVtx[phi_t2 + 3].v.ob[0] =
-            this->windowContentVtx[phi_t2].v.ob[0] + 12;
-        this->windowContentVtx[phi_t2].v.ob[1] = this->windowContentVtx[phi_t2 + 1].v.ob[1] = temp_t1;
-        this->windowContentVtx[phi_t2 + 2].v.ob[1] = this->windowContentVtx[phi_t2 + 3].v.ob[1] =
-            this->windowContentVtx[phi_t2].v.ob[1] - 12;
-        phi_t0 += 5;
-    }
-    phi_t0 += 3;
-    for (phi_a1 = 0; phi_a1 < 2; phi_a1++, phi_t2 += 4) {
-        this->windowContentVtx[phi_t2].v.ob[0] = this->windowContentVtx[phi_t2 + 2].v.ob[0] = phi_t0;
-        this->windowContentVtx[phi_t2 + 1].v.ob[0] = this->windowContentVtx[phi_t2 + 3].v.ob[0] =
-            this->windowContentVtx[phi_t2].v.ob[0] + 12;
-        this->windowContentVtx[phi_t2].v.ob[1] = this->windowContentVtx[phi_t2 + 1].v.ob[1] = temp_t1;
-        this->windowContentVtx[phi_t2 + 2].v.ob[1] = this->windowContentVtx[phi_t2 + 3].v.ob[1] =
-            this->windowContentVtx[phi_t2].v.ob[1] - 12;
-        phi_t0 += 9;
+    if (CVarGetInteger(CVAR_ENHANCEMENT("FileSelectMoreInfo"), 0) == 0 || this->menuMode != FS_MENU_MODE_SELECT) {
+    //Lv Icon & Number Position Without More Info
+        if (CVarGetInteger("LeveledAltAssets", 0)) {
+            phi_t0 = this->windowPosX + 28;
+            temp_t1 = 24;
+            for (phi_a1 = 0; phi_a1 < 2; phi_a1++, phi_t2 += 4) {
+                this->windowContentVtx[phi_t2].v.ob[0] = this->windowContentVtx[phi_t2 + 2].v.ob[0] = phi_t0;
+                this->windowContentVtx[phi_t2 + 1].v.ob[0] = this->windowContentVtx[phi_t2 + 3].v.ob[0] =
+                    this->windowContentVtx[phi_t2].v.ob[0] + 12;
+                this->windowContentVtx[phi_t2].v.ob[1] = this->windowContentVtx[phi_t2 + 1].v.ob[1] = temp_t1;
+                this->windowContentVtx[phi_t2 + 2].v.ob[1] = this->windowContentVtx[phi_t2 + 3].v.ob[1] =
+                    this->windowContentVtx[phi_t2].v.ob[1] - 12;
+                phi_t0 += 5;
+            }
+            phi_t0 += 3;
+            for (phi_a1 = 0; phi_a1 < 2; phi_a1++, phi_t2 += 4) {
+                this->windowContentVtx[phi_t2].v.ob[0] = this->windowContentVtx[phi_t2 + 2].v.ob[0] = phi_t0;
+                this->windowContentVtx[phi_t2 + 1].v.ob[0] = this->windowContentVtx[phi_t2 + 3].v.ob[0] =
+                    this->windowContentVtx[phi_t2].v.ob[0] + 12;
+                this->windowContentVtx[phi_t2].v.ob[1] = this->windowContentVtx[phi_t2 + 1].v.ob[1] = temp_t1;
+                this->windowContentVtx[phi_t2 + 2].v.ob[1] = this->windowContentVtx[phi_t2 + 3].v.ob[1] =
+                    this->windowContentVtx[phi_t2].v.ob[1] - 12;
+                phi_t0 += 7;
+            }
+        } else {
+            phi_t0 = this->windowPosX + 30;
+            temp_t1 = 24;
+            for (phi_a1 = 0; phi_a1 < 2; phi_a1++, phi_t2 += 4) {
+                this->windowContentVtx[phi_t2].v.ob[0] = this->windowContentVtx[phi_t2 + 2].v.ob[0] = phi_t0;
+                this->windowContentVtx[phi_t2 + 1].v.ob[0] = this->windowContentVtx[phi_t2 + 3].v.ob[0] =
+                    this->windowContentVtx[phi_t2].v.ob[0] + 12;
+                this->windowContentVtx[phi_t2].v.ob[1] = this->windowContentVtx[phi_t2 + 1].v.ob[1] = temp_t1;
+                this->windowContentVtx[phi_t2 + 2].v.ob[1] = this->windowContentVtx[phi_t2 + 3].v.ob[1] =
+                    this->windowContentVtx[phi_t2].v.ob[1] - 12;
+                phi_t0 += 5;
+            }
+            phi_t0 += 3;
+            for (phi_a1 = 0; phi_a1 < 2; phi_a1++, phi_t2 += 4) {
+                this->windowContentVtx[phi_t2].v.ob[0] = this->windowContentVtx[phi_t2 + 2].v.ob[0] = phi_t0;
+                this->windowContentVtx[phi_t2 + 1].v.ob[0] = this->windowContentVtx[phi_t2 + 3].v.ob[0] =
+                    this->windowContentVtx[phi_t2].v.ob[0] + 12;
+                this->windowContentVtx[phi_t2].v.ob[1] = this->windowContentVtx[phi_t2 + 1].v.ob[1] = temp_t1;
+                this->windowContentVtx[phi_t2 + 2].v.ob[1] = this->windowContentVtx[phi_t2 + 3].v.ob[1] =
+                    this->windowContentVtx[phi_t2].v.ob[1] - 12;
+                phi_t0 += 7;
+            }
+        }
+    } else {
+    // Lv Icon & Number Position With More Info
+        phi_t0 = this->windowPosX + 33;
+        temp_t1 = 14;
+        for (phi_a1 = 0; phi_a1 < 2; phi_a1++, phi_t2 += 4) {
+            this->windowContentVtx[phi_t2].v.ob[0] = this->windowContentVtx[phi_t2 + 2].v.ob[0] = phi_t0;
+            this->windowContentVtx[phi_t2 + 1].v.ob[0] = this->windowContentVtx[phi_t2 + 3].v.ob[0] =
+                this->windowContentVtx[phi_t2].v.ob[0] + 12;
+            this->windowContentVtx[phi_t2].v.ob[1] = this->windowContentVtx[phi_t2 + 1].v.ob[1] = temp_t1;
+            this->windowContentVtx[phi_t2 + 2].v.ob[1] = this->windowContentVtx[phi_t2 + 3].v.ob[1] =
+                this->windowContentVtx[phi_t2].v.ob[1] - 12;
+            phi_t0 += 5;
+        }
+        phi_t0 -= 12;
+        temp_t1 = 4;
+        for (phi_a1 = 0; phi_a1 < 2; phi_a1++, phi_t2 += 4) {
+            this->windowContentVtx[phi_t2].v.ob[0] = this->windowContentVtx[phi_t2 + 2].v.ob[0] = phi_t0;
+            this->windowContentVtx[phi_t2 + 1].v.ob[0] = this->windowContentVtx[phi_t2 + 3].v.ob[0] =
+                this->windowContentVtx[phi_t2].v.ob[0] + 12;
+            this->windowContentVtx[phi_t2].v.ob[1] = this->windowContentVtx[phi_t2 + 1].v.ob[1] = temp_t1;
+            this->windowContentVtx[phi_t2 + 2].v.ob[1] = this->windowContentVtx[phi_t2 + 3].v.ob[1] =
+                this->windowContentVtx[phi_t2].v.ob[1] - 12;
+            phi_t0 += 7;
+        }
+
     }
 }
 
@@ -2038,27 +2123,59 @@ void FileChoose_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
         }
 
         // draw level
-        gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[648], 32, 0);
-        gDPSetPrimColor(POLY_OPA_DISP++, 0x00, 0x00, 255, 255, 100, this->fileInfoAlpha[fileIndex]);
+        if (CVarGetInteger(CVAR_ENHANCEMENT("FileSelectMoreInfo"), 0) == 0 || this->menuMode != FS_MENU_MODE_SELECT) {
+            gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[648], 32, 0);
+            gDPSetPrimColor(POLY_OPA_DISP++, 0x00, 0x00, 255, 255, 0, this->fileInfoAlpha[fileIndex]);
 
-        char lvText[] = { 21, 57 };
+            char lvText[] = { 21, 57 };
 
-        for (i = 0, vtxOffset = 0; i < 2; i++, vtxOffset += 4) {
-            FileChoose_DrawCharacter(this->state.gfxCtx, sp54->fontBuf + lvText[i] * FONT_CHAR_TEX_SIZE, vtxOffset);
-        }
+            for (i = 0, vtxOffset = 0; i < 2; i++, vtxOffset += 4) {
+                if (CVarGetInteger("LeveledAltAssets", 0)) {
+                    LeveledFileChoose_DrawImageRGBA32(this->state.gfxCtx, 111, 112, gLeveledLvIconENGTex, 32, 32);
+                } else {
+                    FileChoose_DrawCharacter(this->state.gfxCtx, sp54->fontBuf + lvText[i] * FONT_CHAR_TEX_SIZE,
+                                             vtxOffset);
+                }
+            }
 
-        gDPPipeSync(POLY_OPA_DISP++);
-        gDPSetCombineLERP(POLY_OPA_DISP++, 1, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0, 1, 0, PRIMITIVE, 0, TEXEL0, 0,
-                          PRIMITIVE, 0);
-        gDPSetPrimColor(POLY_OPA_DISP++, 0x00, 0x00, 255, 255, 100, this->fileInfoAlpha[fileIndex]);
-        gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[656], 12, 0);
+            gDPPipeSync(POLY_OPA_DISP++);
+            gDPSetCombineLERP(POLY_OPA_DISP++, 1, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0, 1, 0, PRIMITIVE, 0, TEXEL0,
+                              0, PRIMITIVE, 0);
+            gDPSetPrimColor(POLY_OPA_DISP++, 0x00, 0x00, 255, 255, 0, this->fileInfoAlpha[fileIndex]);
+            gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[656], 12, 0);
 
-        FileChoose_SplitNumber(Save_GetSaveMetaInfo(fileIndex)->level, &deathCountSplit[0], &deathCountSplit[1],
-                               &deathCountSplit[2]);
+            FileChoose_SplitNumber(Save_GetSaveMetaInfo(fileIndex)->level, &deathCountSplit[0], &deathCountSplit[1],
+                                   &deathCountSplit[2]);
 
-        for (i = 1, vtxOffset = 0; i < 3; i++, vtxOffset += 4) {
-            FileChoose_DrawCharacter(this->state.gfxCtx, sp54->fontBuf + deathCountSplit[i] * FONT_CHAR_TEX_SIZE,
-                                     vtxOffset);
+            for (i = 1, vtxOffset = 0; i < 3; i++, vtxOffset += 4) {
+                FileChoose_DrawCharacter(this->state.gfxCtx, sp54->fontBuf + deathCountSplit[i] * FONT_CHAR_TEX_SIZE,
+                                         vtxOffset);
+            }
+        } else {
+            gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[648], 12, 0);
+            gDPSetPrimColor(POLY_OPA_DISP++, 0x00, 0x01, 255, 255, 0, this->fileInfoAlpha[fileIndex]);
+
+            char lvText[] = { 21, 57 };
+
+            for (i = 0, vtxOffset = 0; i < 2; i++, vtxOffset += 4) {
+                if (CVarGetInteger("LeveledAltAssets", 0)) {
+                    LeveledFileChoose_DrawImageRGBA32(this->state.gfxCtx, 114, 122, gLeveledLvIconENGTex, 32, 32);
+                } else {
+                    FileChoose_DrawCharacter(this->state.gfxCtx, sp54->fontBuf + lvText[i] * FONT_CHAR_TEX_SIZE, vtxOffset);
+                }
+            }
+
+            gDPPipeSync(POLY_OPA_DISP++);
+            gDPSetCombineLERP(POLY_OPA_DISP++, 1, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0, 1, 0, PRIMITIVE, 0, TEXEL0,
+                              0, PRIMITIVE, 0);
+            gDPSetPrimColor(POLY_OPA_DISP++, 0x00, 0x00, 255, 255, 0, this->fileInfoAlpha[fileIndex]);
+            gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[656], 12, 0);
+
+            FileChoose_SplitNumber(Save_GetSaveMetaInfo(fileIndex)->level, &deathCountSplit[0], &deathCountSplit[1], &deathCountSplit[2]);
+
+            for (i = 1, vtxOffset = 0; i < 3; i++, vtxOffset += 4) {
+                FileChoose_DrawCharacter(this->state.gfxCtx, sp54->fontBuf + deathCountSplit[i] * FONT_CHAR_TEX_SIZE, vtxOffset);
+            }
         }
         // end draw level
 

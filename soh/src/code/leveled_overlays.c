@@ -252,7 +252,7 @@ void ActorExperienceNumber_Draw(PlayState* play, Actor* actor) {
     spBC.z = spBC.z * 1.0f;
 
     // Color
-    if (CVarGetInteger("LeveledAltAssets", 1)) {
+    if (CVarGetInteger("LeveledAltAssets", 0)) {
         gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 180, 255, 255);
     } else {
         gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 190, 190, 0, 255);
@@ -340,7 +340,7 @@ void ActorDamageNumber_Draw(PlayState* play, Actor* actor) {
     spBC.z = spBC.z * 1.0f;
 
     // Color
-    if (CVarGetInteger("LeveledAltAssets", 1)) {
+    if (CVarGetInteger("LeveledAltAssets", 0)) {
         if (actor->category == ACTORCAT_PLAYER) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 255, 0, 0, 255);
         } else {
@@ -421,7 +421,7 @@ void Actor_LevelUpDraw(PlayState* play, Actor* actor) {
                           PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
         
     // Leveled Up Overlay    
-        if (CVarGetInteger("LeveledAltAssets", 1)) {
+        if (CVarGetInteger("LeveledAltAssets", 0)) {
             if (i == 2) {
 
                 for (u8 j = 0; j < 3; j++) {
@@ -643,7 +643,7 @@ void Leveled_BigValueNumberDraw(PlayState* play, u16 x, u16 y, u32 value, u8 r, 
             POLY_KAL_DISP = Gfx_TextureI8(POLY_KAL_DISP, (u8*)digitTextures[digit[i]], 8, 16, x - i * width + width * (digits - 1) + (j % 2) * 2 - 1, y + (j / 2) * 2 - 1, 8, 16, 1 << 10, 1 << 10);
         }
         // Lv Color
-        if (CVarGetInteger("LeveledAltAssets", 1)) {
+        if (CVarGetInteger("LeveledAltAssets", 0)) {
             gDPSetPrimColor(POLY_KAL_DISP++, 0, 0, 255, 255, 0, 255);
         } else {
             gDPSetPrimColor(POLY_KAL_DISP++, 0, 0, 255, 255, 255, 255);
@@ -674,7 +674,7 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
 
     // Values and Icons
     // Level
-    if (CVarGetInteger("LeveledAltAssets", 1)) {
+    if (CVarGetInteger("LeveledAltAssets", 0)) {
         Leveled_DrawTex32(play, dgLeveledLvIconENGTex, 32, 32, statX + 3, statY - 8, 19, 19);
         Leveled_BigValueNumberDraw(play, statX + 14, statY - 12, player->actor.level, 255, 255, 255, 0);
         statY += 3;
@@ -687,7 +687,7 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
     }
 
     // Health
-    if (CVarGetInteger("LeveledAltAssets", 1)) {
+    if (CVarGetInteger("LeveledAltAssets", 0)) {
         Leveled_DrawTex32(play, dgLeveledHeartIconTex, 32, 32, statX - 1, statY, 16, 16);
         Leveled_DrawTexI8(play, dgLeveledCharSolidusTex, 8, 16,
                           statX + (gSaveContext.healthCapacity2 >= 1000 ? 35 : 29) - 2, statY, 8, 8, 255, 255, 255);
@@ -708,7 +708,7 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
     }
 
     // Magic
-    if (CVarGetInteger("LeveledAltAssets", 1)) {
+    if (CVarGetInteger("LeveledAltAssets", 0)) {
         if (gSaveContext.magicCapacity > 0) {
             Leveled_DrawTex32(play, dgLeveledMagicIconTex, 32, 32, statX - 1, statY, 16, 16);
             Leveled_DrawTexI8(play, dgLeveledCharSolidusTex, 8, 16, statX + 26, statY, 8, 8, 255, 255, 255);
@@ -727,7 +727,7 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
     }
 
     // Attack
-    if (CVarGetInteger("LeveledAltAssets", 1)) {
+    if (CVarGetInteger("LeveledAltAssets", 0)) {
         Leveled_DrawTex32(play, dgLeveledAttackIconTex, 32, 32, statX, statY, 14, 14);
         Leveled_ValueNumberDraw(play, statX + 8, statY, GetActorStat_Attack(attack, CLAMP(player->actor.power + player->actor.powerModifier, 0, 255)), 255, 115, 0);
     statY += 8;
@@ -752,7 +752,7 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
     }
 
     //Power
-    if (CVarGetInteger("LeveledAltAssets", 1)) {
+    if (CVarGetInteger("LeveledAltAssets", 0)) {
         Leveled_DrawTex32(play, dgLeveledPowerIconTex, 32, 32, statX - 1, statY, 16, 16);
         Leveled_ValueNumberDraw(play, statX + 8.5, statY,
                                 CLAMP(player->actor.power + player->actor.powerModifier, 0, 255), textColor.r,
@@ -778,7 +778,7 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
     }
 
     // Defense
-    if (CVarGetInteger("LeveledAltAssets", 1)) {
+    if (CVarGetInteger("LeveledAltAssets", 0)) {
         Leveled_DrawTex32(play, dgLeveledDefenseIconTex, 32, 32, statX - 1, statY, 16, 16);
         Leveled_ValueNumberDraw(play, statX + 8, statY, CLAMP(player->actor.courage + player->actor.courageModifier, 0, 255), textColor.r, textColor.g, textColor.b);
         statX = 90;
@@ -799,7 +799,7 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
     }
 
     // XP Needed
-    if (CVarGetInteger("LeveledAltAssets", 1)) {
+    if (CVarGetInteger("LeveledAltAssets", 0)) {
         Leveled_DrawTex4b(play, dgLeveledXpNeededIconENGTex, 48, 16, statX, statY - 4, 56, 24);
         Leveled_DrawTexI8(play, dgLeveledCharSolidusTex, 8, 16, statX + 28, statY - 2, 8, 8, 255, 255, 255);
         Leveled_ValueNumberDraw(play, statX + 34, statY - 2, GetActorStat_NextLevelExp(player->actor.level, gSaveContext.experience), 0, 180, 255);
@@ -812,7 +812,7 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
     }
 
     // Total Xp
-    if (CVarGetInteger("LeveledAltAssets", 1)) {
+    if (CVarGetInteger("LeveledAltAssets", 0)) {
         Leveled_DrawTex4b(play, dgLeveledTotalXpIconENGTex, 48, 16, statX, statY - 4, 56, 24);
         Leveled_DrawTexI8(play, dgLeveledCharSolidusTex, 8, 16, statX + 28, statY - 2, 8, 8, 255, 255, 255);
         Leveled_ValueNumberDraw(play, statX + 34, statY - 2, gSaveContext.experience, 0, 180, 255);
@@ -843,7 +843,7 @@ void Leveled_Interface_DrawNextLevel(PlayState* play) {
     s32 j;
 
     // Next Lv HUD
-    if (CVarGetInteger("LeveledAltAssets", 1)) {
+    if (CVarGetInteger("LeveledAltAssets", 0)) {
         Leveled_OverlayDrawTex4b(play, dgLeveledXpNeededHudIconENGTex, 48, 16, -192, -268, 48, 16, 255 - play->pauseCtx.alpha); // Load texture
         Leveled_OverlayDrawTex4b(play, dgLeveledXpNeededHudIconENGTex, 48, 16, posX, posY, 56, 24, 255 - play->pauseCtx.alpha); // Draw texture
     } else {
@@ -906,7 +906,7 @@ void Leveled_Interface_DrawNextLevel(PlayState* play) {
             for (u8 k = 0; k < 3; k++) {
                 if (j == 1 && k == 1)
                     continue;
-    if (CVarGetInteger("LeveledAltAssets", 1)) {
+    if (CVarGetInteger("LeveledAltAssets", 0)) {
         OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP, (u8*)digitTextures[digit[i]], 8, 16,
                           posX - i * width + width * (digits - 1) + 50 - 1 + k, posY - 1 + j, 8, 16, 1024, 1024);
     } else {
@@ -916,7 +916,7 @@ void Leveled_Interface_DrawNextLevel(PlayState* play) {
             }
         }
 
-        if (CVarGetInteger("LeveledAltAssets", 1)) {
+        if (CVarGetInteger("LeveledAltAssets", 0)) {
             gDPSetPrimColor(OVERLAY_DISP++, 0, 0, 0, 180, 255, 255 - play->pauseCtx.alpha);
             OVERLAY_DISP = Gfx_TextureI8(OVERLAY_DISP, (u8*)digitTextures[digit[i]], 8, 16,
                               posX - i * width + width * (digits - 1) + 50, posY, 8, 16, 1 << 10, 1 << 10);
