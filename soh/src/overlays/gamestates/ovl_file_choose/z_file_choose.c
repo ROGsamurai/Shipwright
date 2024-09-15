@@ -79,6 +79,7 @@ static ItemData itemData[88] = {
     {CREATE_SPRITE_32(dgItemIconArrowFireTex, 4),          ITEM_ARROW_FIRE,       INV_IC_POS(4, 0), SIZE_NORMAL},
     {CREATE_SPRITE_32(dgItemIconDinsFireTex, 5),           ITEM_DINS_FIRE,        INV_IC_POS(5, 0), SIZE_NORMAL},
     {CREATE_SPRITE_32(dgItemIconBottleEmptyTex, 20),       ITEM_BOTTLE,           INV_IC_POS(6, 0), SIZE_NORMAL},
+
     {CREATE_SPRITE_32(dgItemIconSlingshotTex, 6),          ITEM_SLINGSHOT,        INV_IC_POS(0, 1), SIZE_NORMAL},
     {CREATE_SPRITE_32(dgItemIconOcarinaFairyTex, 7),       ITEM_OCARINA_FAIRY,    INV_IC_POS(1, 1), SIZE_NORMAL},
     {CREATE_SPRITE_32(dgItemIconOcarinaOfTimeTex, 7),      ITEM_OCARINA_TIME,     INV_IC_POS(1, 1), SIZE_NORMAL},
@@ -699,7 +700,6 @@ void LeveledFileChoose_DrawImageRGBA32(GraphicsContext* gfxCtx, s16 centerX, s16
     u32 rectLeft;
     u32 rectTop;
     u32 textureHeight;
-    u32 textureWidth;
     s32 remainingSize;
     s32 textureSize;
     s32 pad;
@@ -739,7 +739,6 @@ void FileChoose_DrawImageRGBA32(GraphicsContext* gfxCtx, s16 centerX, s16 center
 
     rectLeft = centerX - (width / 2);
     rectTop = centerY - (height / 2);
-
 
     gDPSetTileCustom(POLY_OPA_DISP++, G_IM_FMT_RGBA, G_IM_SIZ_32b, width, height, 0, G_TX_NOMIRROR | G_TX_CLAMP,
                      G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
@@ -1972,7 +1971,7 @@ void FileChoose_SetWindowContentVtx(GameState* thisx) {
     if (CVarGetInteger(CVAR_ENHANCEMENT("FileSelectMoreInfo"), 0) == 0 || this->menuMode != FS_MENU_MODE_SELECT) {
     //Lv Icon & Number Position Without More Info
         if (CVarGetInteger("LeveledAltAssets", 0)) {
-            phi_t0 = this->windowPosX + 28;
+            phi_t0 = this->windowPosX + 30;
             temp_t1 = 24;
             for (phi_a1 = 0; phi_a1 < 2; phi_a1++, phi_t2 += 4) {
                 this->windowContentVtx[phi_t2].v.ob[0] = this->windowContentVtx[phi_t2 + 2].v.ob[0] = phi_t0;
@@ -1984,14 +1983,13 @@ void FileChoose_SetWindowContentVtx(GameState* thisx) {
                 phi_t0 += 5;
             }
             phi_t0 += 3;
-            for (phi_a1 = 0; phi_a1 < 2; phi_a1++, phi_t2 += 4) {
+            for (phi_a1 = 0; phi_a1 < 2; phi_a1++, phi_t2 += 4, phi_t0 = this->windowPosX + 50) {
                 this->windowContentVtx[phi_t2].v.ob[0] = this->windowContentVtx[phi_t2 + 2].v.ob[0] = phi_t0;
                 this->windowContentVtx[phi_t2 + 1].v.ob[0] = this->windowContentVtx[phi_t2 + 3].v.ob[0] =
                     this->windowContentVtx[phi_t2].v.ob[0] + 12;
                 this->windowContentVtx[phi_t2].v.ob[1] = this->windowContentVtx[phi_t2 + 1].v.ob[1] = temp_t1;
                 this->windowContentVtx[phi_t2 + 2].v.ob[1] = this->windowContentVtx[phi_t2 + 3].v.ob[1] =
                     this->windowContentVtx[phi_t2].v.ob[1] - 12;
-                phi_t0 += 7;
             }
         } else {
             phi_t0 = this->windowPosX + 30;
@@ -2006,14 +2004,13 @@ void FileChoose_SetWindowContentVtx(GameState* thisx) {
                 phi_t0 += 5;
             }
             phi_t0 += 3;
-            for (phi_a1 = 0; phi_a1 < 2; phi_a1++, phi_t2 += 4) {
+            for (phi_a1 = 0; phi_a1 < 2; phi_a1++, phi_t2 += 4, phi_t0 = this->windowPosX + 50) {
                 this->windowContentVtx[phi_t2].v.ob[0] = this->windowContentVtx[phi_t2 + 2].v.ob[0] = phi_t0;
                 this->windowContentVtx[phi_t2 + 1].v.ob[0] = this->windowContentVtx[phi_t2 + 3].v.ob[0] =
                     this->windowContentVtx[phi_t2].v.ob[0] + 12;
                 this->windowContentVtx[phi_t2].v.ob[1] = this->windowContentVtx[phi_t2 + 1].v.ob[1] = temp_t1;
                 this->windowContentVtx[phi_t2 + 2].v.ob[1] = this->windowContentVtx[phi_t2 + 3].v.ob[1] =
                     this->windowContentVtx[phi_t2].v.ob[1] - 12;
-                phi_t0 += 7;
             }
         }
     } else {
@@ -2027,18 +2024,17 @@ void FileChoose_SetWindowContentVtx(GameState* thisx) {
             this->windowContentVtx[phi_t2].v.ob[1] = this->windowContentVtx[phi_t2 + 1].v.ob[1] = temp_t1;
             this->windowContentVtx[phi_t2 + 2].v.ob[1] = this->windowContentVtx[phi_t2 + 3].v.ob[1] =
                 this->windowContentVtx[phi_t2].v.ob[1] - 12;
-            phi_t0 += 5;
+            phi_t0 += 5;  
         }
-        phi_t0 -= 12;
+        phi_t0 -= 11;
         temp_t1 = 4;
-        for (phi_a1 = 0; phi_a1 < 2; phi_a1++, phi_t2 += 4) {
+        for (phi_a1 = 0; phi_a1 < 2; phi_a1++, phi_t2 += 4, phi_t0 = this->windowPosX + 38) {
             this->windowContentVtx[phi_t2].v.ob[0] = this->windowContentVtx[phi_t2 + 2].v.ob[0] = phi_t0;
             this->windowContentVtx[phi_t2 + 1].v.ob[0] = this->windowContentVtx[phi_t2 + 3].v.ob[0] =
                 this->windowContentVtx[phi_t2].v.ob[0] + 12;
             this->windowContentVtx[phi_t2].v.ob[1] = this->windowContentVtx[phi_t2 + 1].v.ob[1] = temp_t1;
             this->windowContentVtx[phi_t2 + 2].v.ob[1] = this->windowContentVtx[phi_t2 + 3].v.ob[1] =
-                this->windowContentVtx[phi_t2].v.ob[1] - 12;
-            phi_t0 += 7;
+                this->windowContentVtx[phi_t2].v.ob[1] - 12;   
         }
 
     }
@@ -2111,14 +2107,12 @@ void FileChoose_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
         gDPSetPrimColor(POLY_OPA_DISP++, 0x00, 0x00, 255, 255, 255, this->fileInfoAlpha[fileIndex]);
         gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[D_8081284C[fileIndex]] + 0x24, 12, 0);
 
-        FileChoose_SplitNumber(Save_GetSaveMetaInfo(fileIndex)->deaths, &deathCountSplit[0], &deathCountSplit[1],
-                               &deathCountSplit[2]);
+        FileChoose_SplitNumber(Save_GetSaveMetaInfo(fileIndex)->deaths, &deathCountSplit[0], &deathCountSplit[1], &deathCountSplit[2]);
 
         // draw death count
         if (CVarGetInteger(CVAR_ENHANCEMENT("FileSelectMoreInfo"), 0) == 0 || this->menuMode != FS_MENU_MODE_SELECT) {
             for (i = 0, vtxOffset = 0; i < 3; i++, vtxOffset += 4) {
-                FileChoose_DrawCharacter(this->state.gfxCtx, sp54->fontBuf + deathCountSplit[i] * FONT_CHAR_TEX_SIZE,
-                                         vtxOffset);
+                FileChoose_DrawCharacter(this->state.gfxCtx, sp54->fontBuf + deathCountSplit[i] * FONT_CHAR_TEX_SIZE, vtxOffset);
             }
         }
 
@@ -2133,8 +2127,7 @@ void FileChoose_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
                 if (CVarGetInteger("LeveledAltAssets", 0)) {
                     LeveledFileChoose_DrawImageRGBA32(this->state.gfxCtx, 111, 112, gLeveledLvIconENGTex, 32, 32);
                 } else {
-                    FileChoose_DrawCharacter(this->state.gfxCtx, sp54->fontBuf + lvText[i] * FONT_CHAR_TEX_SIZE,
-                                             vtxOffset);
+                    FileChoose_DrawCharacter(this->state.gfxCtx, sp54->fontBuf + lvText[i] * FONT_CHAR_TEX_SIZE, vtxOffset);
                 }
             }
 
@@ -2144,8 +2137,7 @@ void FileChoose_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
             gDPSetPrimColor(POLY_OPA_DISP++, 0x00, 0x00, 255, 255, 0, this->fileInfoAlpha[fileIndex]);
             gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[656], 12, 0);
 
-            FileChoose_SplitNumber(Save_GetSaveMetaInfo(fileIndex)->level, &deathCountSplit[0], &deathCountSplit[1],
-                                   &deathCountSplit[2]);
+            FileChoose_SplitNumber(Save_GetSaveMetaInfo(fileIndex)->level, &deathCountSplit[0], &deathCountSplit[1], &deathCountSplit[2]);
 
             for (i = 1, vtxOffset = 0; i < 3; i++, vtxOffset += 4) {
                 FileChoose_DrawCharacter(this->state.gfxCtx, sp54->fontBuf + deathCountSplit[i] * FONT_CHAR_TEX_SIZE,
