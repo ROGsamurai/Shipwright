@@ -48,6 +48,7 @@ typedef struct {
 #define CREATE_SPRITE_SONG(colorR, colorG, colorB) { dgSongNoteTex, 16, 24, G_IM_FMT_IA, G_IM_SIZ_8b, 100 }, {colorR, colorG, colorB, 0xFF}
 #define CREATE_SPRITE_RUPEE(colorR, colorG, colorB) { dgRupeeCounterIconTex, 16, 16, G_IM_FMT_IA, G_IM_SIZ_8b, 102 }, {colorR, colorG, colorB, 0xFF}
 #define CREATE_SPRITE_SKULL { dgDungeonMapSkullTex, 16, 16, G_IM_FMT_RGBA, G_IM_SIZ_16b, 104 }, {0xFF, 0xFF, 0xFF, 0xFF}
+#define CREATE_SPRITE_LEVEL { dgLeveledLvIconENGTex, 32, 32, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1000 }, {0xFF, 0xFF, 0xFF, 0x00}
 #define CREATE_SPRITE_COUNTER_DIGIT(i) { dgAmmoDigit##i##Tex, 8, 8, G_IM_FMT_IA, G_IM_SIZ_8b, 105+i }
 
 #define ICON_SIZE 12
@@ -477,6 +478,7 @@ typedef enum {
     /* 0x04 */ COUNTER_WALLET_TYCOON,
     /* 0x04 */ COUNTER_SKULLTULLAS,
     /* 0x04 */ COUNTER_DEATHS,
+    /* 0x05 */ COUNTER_LEVEL,
 } CounterID;
 
 typedef struct {
@@ -487,7 +489,7 @@ typedef struct {
     IconSize size;
 } CounterData;
 
-static CounterData counterData[7] = {
+static CounterData counterData[8] = { 
     {CREATE_SPRITE_24(dgQuestIconHeartContainerTex, 101), COUNTER_HEALTH,        {0x05, 0x00}, SIZE_COUNTER},
     {CREATE_SPRITE_RUPEE(0xC8, 0xFF, 0x64),               COUNTER_WALLET_CHILD,  {0x05, 0x15}, SIZE_COUNTER},
     {CREATE_SPRITE_RUPEE(0x82, 0x82, 0xFF),               COUNTER_WALLET_ADULT,  {0x05, 0x15}, SIZE_COUNTER},
@@ -495,6 +497,7 @@ static CounterData counterData[7] = {
     {CREATE_SPRITE_RUPEE(0xFF, 0x5A, 0xFF),               COUNTER_WALLET_TYCOON, {0x05, 0x15}, SIZE_COUNTER},
     {CREATE_SPRITE_24(dgQuestIconGoldSkulltulaTex, 103),  COUNTER_SKULLTULLAS,   {0x05, 0x2A}, SIZE_COUNTER},
     {CREATE_SPRITE_SKULL,                                 COUNTER_DEATHS,        {0x48, 0x2A}, SIZE_COUNTER},
+    {CREATE_SPRITE_LEVEL,                                 COUNTER_LEVEL,         {0x26, 0x0C}, SIZE_COUNTER},
 };
 
 static Sprite counterDigitSprites[10] = {
@@ -531,59 +534,66 @@ u8 ShouldRenderCounter(s16 fileIndex, u8 counterId) {
 }
 
 u16 GetCurrentCounterValue(s16 fileIndex, u8 counter) {
-    //one heart is 16 healthCapacity
-    if (counter == COUNTER_HEALTH) {
-        return Save_GetSaveMetaInfo(fileIndex)->healthCapacity / 16;
-    }
+        // one heart is 16 healthCapacity
+        if (counter == COUNTER_HEALTH) {
+            return Save_GetSaveMetaInfo(fileIndex)->healthCapacity / 16;
+        }
 
-    if (counter >= COUNTER_WALLET_CHILD && counter <= COUNTER_WALLET_TYCOON) {
-        return Save_GetSaveMetaInfo(fileIndex)->rupees;
-    }
+        if (counter >= COUNTER_WALLET_CHILD && counter <= COUNTER_WALLET_TYCOON) {
+            return Save_GetSaveMetaInfo(fileIndex)->rupees;
+        }
 
-    if (counter == COUNTER_SKULLTULLAS) {
-        return Save_GetSaveMetaInfo(fileIndex)->gsTokens;
-    }
+        if (counter == COUNTER_SKULLTULLAS) {
+            return Save_GetSaveMetaInfo(fileIndex)->gsTokens;
+        }
 
-    if (counter == COUNTER_DEATHS) {
-        return Save_GetSaveMetaInfo(fileIndex)->deaths;
-    }
+        if (counter == COUNTER_DEATHS) {
+            return Save_GetSaveMetaInfo(fileIndex)->deaths;
+        }
 
-    return 0;
+        if (counter == COUNTER_LEVEL) {
+            return Save_GetSaveMetaInfo(fileIndex)->level;
+        }
+        return 0;
 }
 
 u16 GetMaxCounterValue(s16 fileIndex, u8 counter) {
-    if (counter == COUNTER_HEALTH) {
-        return 20;
-    }
+        if (counter == COUNTER_HEALTH) {
+            return 20;
+        }
 
-    if (counter == COUNTER_WALLET_CHILD) {
-        return 99;
-    }
+        if (counter == COUNTER_WALLET_CHILD) {
+            return 99;
+        }
 
-    if (counter == COUNTER_WALLET_ADULT) {
-        return 200;
-    }
+        if (counter == COUNTER_WALLET_ADULT) {
+            return 200;
+        }
 
-    if (counter == COUNTER_WALLET_GIANT) {
-        return 500;
-    }
+        if (counter == COUNTER_WALLET_GIANT) {
+            return 500;
+        }
 
-    if (counter == COUNTER_WALLET_TYCOON) {
-        return 999;
-    }
+        if (counter == COUNTER_WALLET_TYCOON) {
+            return 999;
+        }
 
-    if (counter == COUNTER_SKULLTULLAS) {
-        return 100;
-    }
+        if (counter == COUNTER_SKULLTULLAS) {
+            return 100;
+        }
 
-    if (counter == COUNTER_DEATHS) {
-        return 999;
-    }
+        if (counter == COUNTER_DEATHS) {
+            return 999;
+        }
 
-    return 0;
+        if (counter == COUNTER_LEVEL) {
+            return 99;
+        }
+        return 0;
 }
 
 void DrawCounterValue(FileChooseContext* this, s16 fileIndex, u8 alpha, CounterData* data) {
+
     u16 currentValue;
     u16 maxValue;
     s16 hundreds;
@@ -1969,7 +1979,7 @@ void FileChoose_SetWindowContentVtx(GameState* thisx) {
     phi_t2 += 8;
     // Level count
     if (CVarGetInteger(CVAR_ENHANCEMENT("FileSelectMoreInfo"), 0) == 0 || this->menuMode != FS_MENU_MODE_SELECT) {
-    //Lv Icon & Number Position Without More Info
+        // Lv Icon & Number Position Without More Info
         if (CVarGetInteger("LeveledAltAssets", 0)) {
             phi_t0 = this->windowPosX + 30;
             temp_t1 = 24;
@@ -2014,8 +2024,8 @@ void FileChoose_SetWindowContentVtx(GameState* thisx) {
             }
         }
     } else {
-    // Lv Icon & Number Position With More Info
-        phi_t0 = this->windowPosX + 33;
+        // Lv Icon & Number Position With More Info
+        phi_t0 = this->windowPosX + 32;
         temp_t1 = 14;
         for (phi_a1 = 0; phi_a1 < 2; phi_a1++, phi_t2 += 4) {
             this->windowContentVtx[phi_t2].v.ob[0] = this->windowContentVtx[phi_t2 + 2].v.ob[0] = phi_t0;
@@ -2024,7 +2034,7 @@ void FileChoose_SetWindowContentVtx(GameState* thisx) {
             this->windowContentVtx[phi_t2].v.ob[1] = this->windowContentVtx[phi_t2 + 1].v.ob[1] = temp_t1;
             this->windowContentVtx[phi_t2 + 2].v.ob[1] = this->windowContentVtx[phi_t2 + 3].v.ob[1] =
                 this->windowContentVtx[phi_t2].v.ob[1] - 12;
-            phi_t0 += 5;  
+            phi_t0 += 5;
         }
         phi_t0 -= 11;
         temp_t1 = 4;
@@ -2034,9 +2044,8 @@ void FileChoose_SetWindowContentVtx(GameState* thisx) {
                 this->windowContentVtx[phi_t2].v.ob[0] + 12;
             this->windowContentVtx[phi_t2].v.ob[1] = this->windowContentVtx[phi_t2 + 1].v.ob[1] = temp_t1;
             this->windowContentVtx[phi_t2 + 2].v.ob[1] = this->windowContentVtx[phi_t2 + 3].v.ob[1] =
-                this->windowContentVtx[phi_t2].v.ob[1] - 12;   
+                this->windowContentVtx[phi_t2].v.ob[1] - 12;
         }
-
     }
 }
 
@@ -2145,29 +2154,21 @@ void FileChoose_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
             }
         } else {
             gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[648], 12, 0);
-            gDPSetPrimColor(POLY_OPA_DISP++, 0x00, 0x01, 255, 255, 0, this->fileInfoAlpha[fileIndex]);
-
+            if (CVarGetInteger("LeveledAltAssets", 0)) {
+                gDPSetPrimColor(POLY_OPA_DISP++, 0x00, 0x01, 255, 255, 255, this->fileInfoAlpha[fileIndex]);
+            } else {
+                gDPSetPrimColor(POLY_OPA_DISP++, 0x00, 0x01, 255, 255, 0, this->fileInfoAlpha[fileIndex]);
+            }
             char lvText[] = { 21, 57 };
 
             for (i = 0, vtxOffset = 0; i < 2; i++, vtxOffset += 4) {
                 if (CVarGetInteger("LeveledAltAssets", 0)) {
-                    LeveledFileChoose_DrawImageRGBA32(this->state.gfxCtx, 114, 122, gLeveledLvIconENGTex, 32, 32);
+                    LeveledFileChoose_DrawImageRGBA32(this->state.gfxCtx, 113, 122, gLeveledLvIconENGTex, 32, 32);
                 } else {
-                    FileChoose_DrawCharacter(this->state.gfxCtx, sp54->fontBuf + lvText[i] * FONT_CHAR_TEX_SIZE, vtxOffset);
+                    FileChoose_DrawCharacter(this->state.gfxCtx, sp54->fontBuf + lvText[i] * FONT_CHAR_TEX_SIZE,
+                                             vtxOffset);
                 }
-            }
-
-            gDPPipeSync(POLY_OPA_DISP++);
-            gDPSetCombineLERP(POLY_OPA_DISP++, 1, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0, 1, 0, PRIMITIVE, 0, TEXEL0,
-                              0, PRIMITIVE, 0);
-            gDPSetPrimColor(POLY_OPA_DISP++, 0x00, 0x00, 255, 255, 0, this->fileInfoAlpha[fileIndex]);
-            gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[656], 12, 0);
-
-            FileChoose_SplitNumber(Save_GetSaveMetaInfo(fileIndex)->level, &deathCountSplit[0], &deathCountSplit[1], &deathCountSplit[2]);
-
-            for (i = 1, vtxOffset = 0; i < 3; i++, vtxOffset += 4) {
-                FileChoose_DrawCharacter(this->state.gfxCtx, sp54->fontBuf + deathCountSplit[i] * FONT_CHAR_TEX_SIZE, vtxOffset);
-            }
+            }   
         }
         // end draw level
 
