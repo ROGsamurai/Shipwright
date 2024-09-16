@@ -52,6 +52,9 @@ static const ALIGN_ASSET(2) char gLeveledUpIconENGTex[] = dgLeveledUpIconENGTex;
 static const ALIGN_ASSET(2) char gLeveledUpTextBoxIconTex[] = dgLeveledUpTextBoxIconTex;
 
 // Leveled Counter Textures
+#define dgLevelCounterLvIconTex "__OTR__leveled/counter/gLevelCounterLvIconTex"
+static const ALIGN_ASSET(2) char gLevelCounterLvIconTex[] = dgLevelCounterLvIconTex;
+
 #define dgLevelCounterDigit0Tex "__OTR__leveled/counter/gLevelCounterDigit0Tex"
 static const ALIGN_ASSET(2) char gLevelCounterDigit0Tex[] = dgLevelCounterDigit0Tex;
 
