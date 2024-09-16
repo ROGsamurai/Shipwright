@@ -49,7 +49,8 @@ typedef struct {
 #define CREATE_SPRITE_RUPEE(colorR, colorG, colorB) { dgRupeeCounterIconTex, 16, 16, G_IM_FMT_IA, G_IM_SIZ_8b, 102 }, {colorR, colorG, colorB, 0xFF}
 #define CREATE_SPRITE_SKULL { dgDungeonMapSkullTex, 16, 16, G_IM_FMT_RGBA, G_IM_SIZ_16b, 104 }, {0xFF, 0xFF, 0xFF, 0xFF}
 #define CREATE_SPRITE_LEVEL { dgLeveledLvIconENGTex, 32, 32, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1000 }, {0xFF, 0xFF, 0xFF, 0x00}
-#define CREATE_SPRITE_COUNTER_DIGIT(i) { dgAmmoDigit##i##Tex, 8, 8, G_IM_FMT_IA, G_IM_SIZ_8b, 105+i }
+#define CREATE_SPRITE_COUNTER_DIGIT(i) { dgAmmoDigit##i##Tex, 8, 8, G_IM_FMT_IA, G_IM_SIZ_8b, 105+i}
+#define CREATE_SPRITE_COUNTER_DIGIT_LEVEL(i) { dgLevelCounterDigit##i##Tex, 8, 8, G_IM_FMT_IA, G_IM_SIZ_8b, 105+i}
 
 #define ICON_SIZE 12
 #define COUNTER_SIZE 16
@@ -470,6 +471,139 @@ static void DrawItems(FileChooseContext* this, s16 fileIndex, u8 alpha) {
     CLOSE_DISPS(this->state.gfxCtx);
 }
 
+// LEVEL COUNTER
+typedef enum {
+    /* 0x00 */ COUNTER_LEVEL,
+} CounterID;
+
+typedef struct {
+    Sprite sprite;
+    Color_RGBA8 color;
+    u8 id;
+    IconPosition pos;
+    IconSize size;
+} LevelCounterData;
+
+static LevelCounterData levelcounterData[1] = {
+    {CREATE_SPRITE_LEVEL, COUNTER_LEVEL, { 0x27, 0x0C }, SIZE_COUNTER},
+};
+
+static Sprite levelcounterDigitSprites[10] = {
+    CREATE_SPRITE_COUNTER_DIGIT_LEVEL(0),
+    CREATE_SPRITE_COUNTER_DIGIT_LEVEL(1),
+    CREATE_SPRITE_COUNTER_DIGIT_LEVEL(2),
+    CREATE_SPRITE_COUNTER_DIGIT_LEVEL(3),
+    CREATE_SPRITE_COUNTER_DIGIT_LEVEL(4),
+    CREATE_SPRITE_COUNTER_DIGIT_LEVEL(5),
+    CREATE_SPRITE_COUNTER_DIGIT_LEVEL(6),
+    CREATE_SPRITE_COUNTER_DIGIT_LEVEL(7),
+    CREATE_SPRITE_COUNTER_DIGIT_LEVEL(8),
+    CREATE_SPRITE_COUNTER_DIGIT_LEVEL(9),
+};
+
+u8 ShouldRenderLevelCounter(s16 fileIndex, u8 counterId) {
+    
+    return 1;
+}
+
+u16 GetCurrentLevelCounterValue(s16 fileIndex, u8 counter) {
+    if (counter == COUNTER_LEVEL) {
+        return Save_GetSaveMetaInfo(fileIndex)->level;
+    }
+    return 0;
+}
+
+u16 GetMaxLevelCounterValue(s16 fileIndex, u8 counter) {
+    if (counter == COUNTER_LEVEL) {
+        return 99;
+    }
+    return 0;
+}
+
+void DrawLevelCounterValue(FileChooseContext* this, s16 fileIndex, u8 alpha, LevelCounterData* data) {
+    u16 currentValue;
+    u16 maxValue;
+    s16 hundreds;
+    s16 tens;
+
+    currentValue = GetCurrentLevelCounterValue(fileIndex, data->id);
+    maxValue = GetMaxLevelCounterValue(fileIndex, data->id);
+
+    // to prevent crashes if you use the save editor
+    if (currentValue > 99) {
+        currentValue = 99;
+    }
+
+    OPEN_DISPS(this->state.gfxCtx);
+    gDPPipeSync(POLY_OPA_DISP++);
+    gDPSetCombineMode(POLY_OPA_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+
+    if (currentValue == 0) {
+        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 130, 130, 130, alpha);
+    } else if (currentValue == maxValue) {
+        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 120, 255, 0, alpha);
+    } else {
+        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, alpha);
+    }
+
+    for (hundreds = 0; currentValue >= 100; hundreds++) {
+        currentValue -= 100;
+    }
+
+    for (tens = 0; currentValue >= 10; tens++) {
+        currentValue -= 10;
+    }
+
+    if (hundreds != 0) {
+        SpriteLoad(this, &levelcounterDigitSprites[hundreds]);
+        SpriteDraw(this, &levelcounterDigitSprites[hundreds], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET - 6 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 8, 8);
+
+        SpriteLoad(this, &levelcounterDigitSprites[tens]);
+        SpriteDraw(this, &levelcounterDigitSprites[tens], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 8, 8);
+
+        SpriteLoad(this, &levelcounterDigitSprites[currentValue]);
+        SpriteDraw(this, &levelcounterDigitSprites[currentValue], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + 6 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 8, 8);
+    } else if (tens != 0) {
+        SpriteLoad(this, &levelcounterDigitSprites[tens]);
+        SpriteDraw(this, &levelcounterDigitSprites[tens], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET - 3 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 8, 8);
+
+        SpriteLoad(this, &levelcounterDigitSprites[currentValue]);
+        SpriteDraw(this, &levelcounterDigitSprites[currentValue], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + 2 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 8, 8);
+    } else {
+        SpriteLoad(this, &levelcounterDigitSprites[currentValue]);
+        SpriteDraw(this, &levelcounterDigitSprites[currentValue], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 8, 8);
+    }
+
+    gDPPipeSync(POLY_OPA_DISP++);
+    CLOSE_DISPS(this->state.gfxCtx);
+}
+
+static void DrawLevelCounters(FileChooseContext* this, s16 fileIndex, u8 alpha) {
+    OPEN_DISPS(this->state.gfxCtx);
+    gDPPipeSync(POLY_OPA_DISP++);
+    gDPSetCombineMode(POLY_OPA_DISP++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+
+    for (int i = 0; i < ARRAY_COUNT(levelcounterData); i += 1) {
+        LevelCounterData* data = &levelcounterData[i];
+
+        if (ShouldRenderLevelCounter(fileIndex, data->id)) {
+            gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, data->color.r, data->color.g, data->color.b,
+                            color_product(data->color.a, alpha));
+
+            SpriteLoad(this, &(data->sprite));
+            SpriteDraw(this, &(data->sprite), LEFT_OFFSET + data->pos.left, TOP_OFFSET + data->pos.top,
+                       data->size.width, data->size.height);
+
+            DrawLevelCounterValue(this, fileIndex, alpha, data);
+        }
+
+    }
+
+    gDPPipeSync(POLY_OPA_DISP++);
+    CLOSE_DISPS(this->state.gfxCtx);
+}
+// END LEVEL COUNTER
+
 typedef enum {
     /* 0x00 */ COUNTER_HEALTH,
     /* 0x01 */ COUNTER_WALLET_CHILD,
@@ -478,7 +612,6 @@ typedef enum {
     /* 0x04 */ COUNTER_WALLET_TYCOON,
     /* 0x04 */ COUNTER_SKULLTULLAS,
     /* 0x04 */ COUNTER_DEATHS,
-    /* 0x05 */ COUNTER_LEVEL,
 } CounterID;
 
 typedef struct {
@@ -489,7 +622,7 @@ typedef struct {
     IconSize size;
 } CounterData;
 
-static CounterData counterData[8] = { 
+static CounterData counterData[7] = { 
     {CREATE_SPRITE_24(dgQuestIconHeartContainerTex, 101), COUNTER_HEALTH,        {0x05, 0x00}, SIZE_COUNTER},
     {CREATE_SPRITE_RUPEE(0xC8, 0xFF, 0x64),               COUNTER_WALLET_CHILD,  {0x05, 0x15}, SIZE_COUNTER},
     {CREATE_SPRITE_RUPEE(0x82, 0x82, 0xFF),               COUNTER_WALLET_ADULT,  {0x05, 0x15}, SIZE_COUNTER},
@@ -497,7 +630,6 @@ static CounterData counterData[8] = {
     {CREATE_SPRITE_RUPEE(0xFF, 0x5A, 0xFF),               COUNTER_WALLET_TYCOON, {0x05, 0x15}, SIZE_COUNTER},
     {CREATE_SPRITE_24(dgQuestIconGoldSkulltulaTex, 103),  COUNTER_SKULLTULLAS,   {0x05, 0x2A}, SIZE_COUNTER},
     {CREATE_SPRITE_SKULL,                                 COUNTER_DEATHS,        {0x48, 0x2A}, SIZE_COUNTER},
-    {CREATE_SPRITE_LEVEL,                                 COUNTER_LEVEL,         {0x26, 0x0C}, SIZE_COUNTER},
 };
 
 static Sprite counterDigitSprites[10] = {
@@ -551,9 +683,6 @@ u16 GetCurrentCounterValue(s16 fileIndex, u8 counter) {
             return Save_GetSaveMetaInfo(fileIndex)->deaths;
         }
 
-        if (counter == COUNTER_LEVEL) {
-            return Save_GetSaveMetaInfo(fileIndex)->level;
-        }
         return 0;
 }
 
@@ -586,14 +715,10 @@ u16 GetMaxCounterValue(s16 fileIndex, u8 counter) {
             return 999;
         }
 
-        if (counter == COUNTER_LEVEL) {
-            return 99;
-        }
         return 0;
 }
 
 void DrawCounterValue(FileChooseContext* this, s16 fileIndex, u8 alpha, CounterData* data) {
-
     u16 currentValue;
     u16 maxValue;
     s16 hundreds;
@@ -676,6 +801,9 @@ static void DrawCounters(FileChooseContext* this, s16 fileIndex, u8 alpha) {
 static void DrawMoreInfo(FileChooseContext* this, s16 fileIndex, u8 alpha) {
     DrawItems(this, fileIndex, alpha);
     DrawCounters(this, fileIndex, alpha);
+    if (CVarGetInteger("LeveledAltAssets", 0)) {
+        DrawLevelCounters(this, fileIndex, alpha);
+    }
 }
 
 #define MIN_QUEST (ResourceMgr_GameHasOriginal() ? QUEST_NORMAL : QUEST_MASTER)
@@ -2025,7 +2153,7 @@ void FileChoose_SetWindowContentVtx(GameState* thisx) {
         }
     } else {
         // Lv Icon & Number Position With More Info
-        phi_t0 = this->windowPosX + 32;
+        phi_t0 = this->windowPosX + 33;
         temp_t1 = 14;
         for (phi_a1 = 0; phi_a1 < 2; phi_a1++, phi_t2 += 4) {
             this->windowContentVtx[phi_t2].v.ob[0] = this->windowContentVtx[phi_t2 + 2].v.ob[0] = phi_t0;
@@ -2149,8 +2277,7 @@ void FileChoose_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
             FileChoose_SplitNumber(Save_GetSaveMetaInfo(fileIndex)->level, &deathCountSplit[0], &deathCountSplit[1], &deathCountSplit[2]);
 
             for (i = 1, vtxOffset = 0; i < 3; i++, vtxOffset += 4) {
-                FileChoose_DrawCharacter(this->state.gfxCtx, sp54->fontBuf + deathCountSplit[i] * FONT_CHAR_TEX_SIZE,
-                                         vtxOffset);
+                FileChoose_DrawCharacter(this->state.gfxCtx, sp54->fontBuf + deathCountSplit[i] * FONT_CHAR_TEX_SIZE, vtxOffset);
             }
         } else {
             gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[648], 12, 0);
@@ -2165,10 +2292,29 @@ void FileChoose_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
                 if (CVarGetInteger("LeveledAltAssets", 0)) {
                     LeveledFileChoose_DrawImageRGBA32(this->state.gfxCtx, 113, 122, gLeveledLvIconENGTex, 32, 32);
                 } else {
-                    FileChoose_DrawCharacter(this->state.gfxCtx, sp54->fontBuf + lvText[i] * FONT_CHAR_TEX_SIZE,
-                                             vtxOffset);
+                    FileChoose_DrawCharacter(this->state.gfxCtx, sp54->fontBuf + lvText[i] * FONT_CHAR_TEX_SIZE, vtxOffset);
+
                 }
-            }   
+            }
+            if (CVarGetInteger("LeveledAltAssets", 0)) {
+
+            } else {
+                gDPPipeSync(POLY_OPA_DISP++);
+                gDPSetCombineLERP(POLY_OPA_DISP++, 1, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0, 1, 0, PRIMITIVE, 0,
+                                  TEXEL0, 0, PRIMITIVE, 0);
+                gDPSetPrimColor(POLY_OPA_DISP++, 0x00, 0x00, 255, 255, 100, this->fileInfoAlpha[fileIndex]);
+                gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[656], 12, 0);
+
+                FileChoose_SplitNumber(Save_GetSaveMetaInfo(fileIndex)->level, &deathCountSplit[0], &deathCountSplit[1],
+                                       &deathCountSplit[2]);
+
+                for (i = 1, vtxOffset = 0; i < 3; i++, vtxOffset += 4) {
+                    FileChoose_DrawCharacter(this->state.gfxCtx,
+                                             sp54->fontBuf + deathCountSplit[i] * FONT_CHAR_TEX_SIZE, vtxOffset);
+                }
+            }
+
+
         }
         // end draw level
 

@@ -51,6 +51,37 @@ static const ALIGN_ASSET(2) char gLeveledUpIconENGTex[] = dgLeveledUpIconENGTex;
 #define dgLeveledUpTextBoxIconTex "__OTR__leveled/overlay/gLeveledUpTextBoxIconTex"
 static const ALIGN_ASSET(2) char gLeveledUpTextBoxIconTex[] = dgLeveledUpTextBoxIconTex;
 
+// Leveled Counter Textures
+#define dgLevelCounterDigit0Tex "__OTR__leveled/counter/gLevelCounterDigit0Tex"
+static const ALIGN_ASSET(2) char gLevelCounterDigit0Tex[] = dgLevelCounterDigit0Tex;
+
+#define dgLevelCounterDigit1Tex "__OTR__leveled/counter/gLevelCounterDigit1Tex"
+static const ALIGN_ASSET(2) char gLevelCounterDigit1Tex[] = dgLevelCounterDigit1Tex;
+
+#define dgLevelCounterDigit2Tex "__OTR__leveled/counter/gLevelCounterDigit2Tex"
+static const ALIGN_ASSET(2) char gLevelCounterDigit2Tex[] = dgLevelCounterDigit2Tex;
+
+#define dgLevelCounterDigit3Tex "__OTR__leveled/counter/gLevelCounterDigit3Tex"
+static const ALIGN_ASSET(2) char gLevelCounterDigit3Tex[] = dgLevelCounterDigit3Tex;
+
+#define dgLevelCounterDigit4Tex "__OTR__leveled/counter/gLevelCounterDigit4Tex"
+static const ALIGN_ASSET(2) char gLevelCounterDigit4Tex[] = dgLevelCounterDigit4Tex;
+
+#define dgLevelCounterDigit5Tex "__OTR__leveled/counter/gLevelCounterDigit5Tex"
+static const ALIGN_ASSET(2) char gLevelCounterDigit5Tex[] = dgLevelCounterDigit5Tex;
+
+#define dgLevelCounterDigit6Tex "__OTR__leveled/counter/gLevelCounterDigit6Tex"
+static const ALIGN_ASSET(2) char gLevelCounterDigit6Tex[] = dgLevelCounterDigit6Tex;
+
+#define dgLevelCounterDigit7Tex "__OTR__leveled/counter/gLevelCounterDigit7Tex"
+static const ALIGN_ASSET(2) char gLevelCounterDigit7Tex[] = dgLevelCounterDigit7Tex;
+
+#define dgLevelCounterDigit8Tex "__OTR__leveled/counter/gLevelCounterDigit8Tex"
+static const ALIGN_ASSET(2) char gLevelCounterDigit8Tex[] = dgLevelCounterDigit8Tex;
+
+#define dgLevelCounterDigit9Tex "__OTR__leveled/counter/gLevelCounterDigit9Tex"
+static const ALIGN_ASSET(2) char gLevelCounterDigit9Tex[] = dgLevelCounterDigit9Tex;
+
 // Other Leveled Textures
 #define dgLeveledXpNeededHudIconENGTex "__OTR__leveled/other/gLeveledXpNeededHudIconENGTex"
 static const ALIGN_ASSET(2) char gLeveledXpNeededHudIconENGTex[] = dgLeveledXpNeededHudIconENGTex;
