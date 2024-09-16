@@ -85,6 +85,40 @@ static const ALIGN_ASSET(2) char gLevelCounterDigit8Tex[] = dgLevelCounterDigit8
 #define dgLevelCounterDigit9Tex "__OTR__leveled/counter/gLevelCounterDigit9Tex"
 static const ALIGN_ASSET(2) char gLevelCounterDigit9Tex[] = dgLevelCounterDigit9Tex;
 
+//Leveled More Info Counter Textures
+#define dgLevelMICounterLvIconTex "__OTR__leveled/counter/gLevelMICounterLvIconTex"
+static const ALIGN_ASSET(2) char gLevelMICounterLvIconTex[] = dgLevelMICounterLvIconTex;
+
+#define dgLevelMICounterDigit0Tex "__OTR__leveled/counter/gLevelMICounterDigit0Tex"
+static const ALIGN_ASSET(2) char gLevelMICounterDigit0Tex[] = dgLevelMICounterDigit0Tex;
+
+#define dgLevelMICounterDigit1Tex "__OTR__leveled/counter/gLevelMICounterDigit1Tex"
+static const ALIGN_ASSET(2) char gLevelMICounterDigit1Tex[] = dgLevelMICounterDigit1Tex;
+
+#define dgLevelMICounterDigit2Tex "__OTR__leveled/counter/gLevelMICounterDigit2Tex"
+static const ALIGN_ASSET(2) char gLevelMICounterDigit2Tex[] = dgLevelMICounterDigit2Tex;
+
+#define dgLevelMICounterDigit3Tex "__OTR__leveled/counter/gLevelMICounterDigit3Tex"
+static const ALIGN_ASSET(2) char gLevelMICounterDigit3Tex[] = dgLevelMICounterDigit3Tex;
+
+#define dgLevelMICounterDigit4Tex "__OTR__leveled/counter/gLevelMICounterDigit4Tex"
+static const ALIGN_ASSET(2) char gLevelMICounterDigit4Tex[] = dgLevelMICounterDigit4Tex;
+
+#define dgLevelMICounterDigit5Tex "__OTR__leveled/counter/gLevelMICounterDigit5Tex"
+static const ALIGN_ASSET(2) char gLevelMICounterDigit5Tex[] = dgLevelMICounterDigit5Tex;
+
+#define dgLevelMICounterDigit6Tex "__OTR__leveled/counter/gLevelMICounterDigit6Tex"
+static const ALIGN_ASSET(2) char gLevelMICounterDigit6Tex[] = dgLevelMICounterDigit6Tex;
+
+#define dgLevelMICounterDigit7Tex "__OTR__leveled/counter/gLevelMICounterDigit7Tex"
+static const ALIGN_ASSET(2) char gLevelMICounterDigit7Tex[] = dgLevelMICounterDigit7Tex;
+
+#define dgLevelMICounterDigit8Tex "__OTR__leveled/counter/gLevelMICounterDigit8Tex"
+static const ALIGN_ASSET(2) char gLevelMICounterDigit8Tex[] = dgLevelMICounterDigit8Tex;
+
+#define dgLevelMICounterDigit9Tex "__OTR__leveled/counter/gLevelMICounterDigit9Tex"
+static const ALIGN_ASSET(2) char gLevelMICounterDigit9Tex[] = dgLevelMICounterDigit9Tex;
+
 // Other Leveled Textures
 #define dgLeveledXpNeededHudIconENGTex "__OTR__leveled/other/gLeveledXpNeededHudIconENGTex"
 static const ALIGN_ASSET(2) char gLeveledXpNeededHudIconENGTex[] = dgLeveledXpNeededHudIconENGTex;
