@@ -50,8 +50,8 @@ typedef struct {
 #define CREATE_SPRITE_SKULL { dgDungeonMapSkullTex, 16, 16, G_IM_FMT_RGBA, G_IM_SIZ_16b, 104 }, {0xFF, 0xFF, 0xFF, 0xFF}
 #define CREATE_SPRITE_LEVEL { dgLeveledLvIconENGTex, 32, 32, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1000 }, {0xFF, 0xFF, 0xFF, 0x00}
 #define CREATE_SPRITE_COUNTER_DIGIT(i) { dgAmmoDigit##i##Tex, 8, 8, G_IM_FMT_IA, G_IM_SIZ_8b, 105+i}
-#define CREATE_SPRITE_COUNTER_DIGIT_LEVEL_MAIN(i) { dgLevelCounterDigit##i##Tex, 32, 32, G_IM_FMT_RGBA, G_IM_SIZ_32b, 105 + i }
-#define CREATE_SPRITE_COUNTER_DIGIT_LEVEL(i) { dgLevelCounterDigit##i##Tex, 32, 32, G_IM_FMT_RGBA, G_IM_SIZ_32b, 105 + i }
+#define CREATE_SPRITE_COUNTER_DIGIT_LEVEL_MAIN(i) { dgLevelCounterDigit##i##Tex, 8, 8, G_IM_FMT_IA, G_IM_SIZ_8b, 105 + i }
+#define CREATE_SPRITE_COUNTER_DIGIT_LEVEL(i) { dgLevelCounterDigit##i##Tex, 8, 8, G_IM_FMT_IA, G_IM_SIZ_8b, 105 + i }
 
 #define ICON_SIZE 12
 #define COUNTER_SIZE 16
@@ -558,22 +558,22 @@ void DrawLevelCounterValue(FileChooseContext* this, s16 fileIndex, u8 alpha, Lev
 
     if (hundreds != 0) {
         SpriteLoad(this, &levelcounterDigitSprites[hundreds]);
-        SpriteDraw(this, &levelcounterDigitSprites[hundreds], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET - 6 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 7, 7);
+        SpriteDraw(this, &levelcounterDigitSprites[hundreds], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET - 6 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 8, 8);
 
         SpriteLoad(this, &levelcounterDigitSprites[tens]);
-        SpriteDraw(this, &levelcounterDigitSprites[tens], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 7, 7);
+        SpriteDraw(this, &levelcounterDigitSprites[tens], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 8, 8);
 
         SpriteLoad(this, &levelcounterDigitSprites[currentValue]);
-        SpriteDraw(this, &levelcounterDigitSprites[currentValue], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + 6 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 7, 7);
+        SpriteDraw(this, &levelcounterDigitSprites[currentValue], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + 6 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 8, 8);
     } else if (tens != 0) {
         SpriteLoad(this, &levelcounterDigitSprites[tens]);
-        SpriteDraw(this, &levelcounterDigitSprites[tens], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET - 3 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 7, 7);
+        SpriteDraw(this, &levelcounterDigitSprites[tens], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET - 3 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 8, 8);
 
         SpriteLoad(this, &levelcounterDigitSprites[currentValue]);
-        SpriteDraw(this, &levelcounterDigitSprites[currentValue], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + 2 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 7, 7);
+        SpriteDraw(this, &levelcounterDigitSprites[currentValue], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + 2 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 8, 8);
     } else {
         SpriteLoad(this, &levelcounterDigitSprites[currentValue]);
-        SpriteDraw(this, &levelcounterDigitSprites[currentValue], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 7, 7);
+        SpriteDraw(this, &levelcounterDigitSprites[currentValue], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 8, 8);
     }
 
     gDPPipeSync(POLY_OPA_DISP++);
@@ -619,7 +619,7 @@ typedef struct {
 
 static mainLevelCounterData mainlevelcounterData[1] = {
 
-    { CREATE_SPRITE_LEVEL, COUNTER_LEVEL_MAIN, { 48, - 9 }, SIZE_COUNTER },
+    { CREATE_SPRITE_LEVEL, COUNTER_LEVEL_MAIN, { 48, - 10 }, SIZE_COUNTER },
 };
 
 static Sprite mainlevelcounterDigitSprites[10] = {
@@ -690,22 +690,22 @@ void DrawMainLevelCounterValue(FileChooseContext* this, s16 fileIndex, u8 alpha,
 
     if (hundreds != 0) {
         SpriteLoad(this, &mainlevelcounterDigitSprites[hundreds]);
-        SpriteDraw(this, &mainlevelcounterDigitSprites[hundreds], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET - 6 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 9, 9);
+        SpriteDraw(this, &mainlevelcounterDigitSprites[hundreds], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET - 6 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 10, 10);
 
         SpriteLoad(this, &mainlevelcounterDigitSprites[tens]);
-        SpriteDraw(this, &mainlevelcounterDigitSprites[tens], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 9, 9);
+        SpriteDraw(this, &mainlevelcounterDigitSprites[tens], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 10, 10);
 
         SpriteLoad(this, &mainlevelcounterDigitSprites[currentValue]);
-        SpriteDraw(this, &mainlevelcounterDigitSprites[currentValue], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + 6 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 9, 9);
+        SpriteDraw(this, &mainlevelcounterDigitSprites[currentValue], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + 6 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 10, 10);
     } else if (tens != 0) {
         SpriteLoad(this, &mainlevelcounterDigitSprites[tens]);
-        SpriteDraw(this, &mainlevelcounterDigitSprites[tens], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET - 3 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 9, 9);
+        SpriteDraw(this, &mainlevelcounterDigitSprites[tens], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET - 3 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 10, 10);
 
         SpriteLoad(this, &mainlevelcounterDigitSprites[currentValue]);
-        SpriteDraw(this, &mainlevelcounterDigitSprites[currentValue], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + 4 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 9, 9);
+        SpriteDraw(this, &mainlevelcounterDigitSprites[currentValue], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + 4 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 10, 10);
     } else {
         SpriteLoad(this, &mainlevelcounterDigitSprites[currentValue]);
-        SpriteDraw(this, &mainlevelcounterDigitSprites[currentValue], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 9, 9);
+        SpriteDraw(this, &mainlevelcounterDigitSprites[currentValue], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 10, 10);
     }
 
     gDPPipeSync(POLY_OPA_DISP++);
