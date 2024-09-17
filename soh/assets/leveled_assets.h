@@ -1,3 +1,6 @@
+#ifndef LEVELED_ASSETS_H
+#define LEVELED_ASSETS_H 1
+
 #pragma once
 
 #include "align_asset_macro.h"
@@ -84,8 +87,9 @@ static const ALIGN_ASSET(2) char gLevelCounterDigit8Tex[] = dgLevelCounterDigit8
 
 #define dgLevelCounterDigit9Tex "__OTR__leveled/counter/gLevelCounterDigit9Tex"
 static const ALIGN_ASSET(2) char gLevelCounterDigit9Tex[] = dgLevelCounterDigit9Tex;
+// End Leveled Counter Textures
 
-//Leveled More Info Counter Textures
+// Leveled More Info Counter Textures
 #define dgLevelMICounterLvIconTex "__OTR__leveled/counter/gLevelMICounterLvIconTex"
 static const ALIGN_ASSET(2) char gLevelMICounterLvIconTex[] = dgLevelMICounterLvIconTex;
 
@@ -118,6 +122,7 @@ static const ALIGN_ASSET(2) char gLevelMICounterDigit8Tex[] = dgLevelMICounterDi
 
 #define dgLevelMICounterDigit9Tex "__OTR__leveled/counter/gLevelMICounterDigit9Tex"
 static const ALIGN_ASSET(2) char gLevelMICounterDigit9Tex[] = dgLevelMICounterDigit9Tex;
+// End Leveled More Info Counter Textures
 
 // Other Leveled Textures
 #define dgLeveledXpNeededHudIconENGTex "__OTR__leveled/other/gLeveledXpNeededHudIconENGTex"
@@ -125,3 +130,5 @@ static const ALIGN_ASSET(2) char gLeveledXpNeededHudIconENGTex[] = dgLeveledXpNe
 
 #define dgLeveledCharSolidusTex "__OTR__leveled/other/gLeveledCharSolidusTex"
 static const ALIGN_ASSET(2) char gLeveledCharSolidusTex[] = dgLeveledCharSolidusTex;
+
+#endif // LEVELED_ASSETS_H
