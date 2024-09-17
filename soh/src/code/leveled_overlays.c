@@ -606,33 +606,27 @@ void Actor_LevelUpDraw(PlayState* play, Actor* actor) {
             if (i == 2) {
 
                 for (u8 j = 0; j < 3; j++) {
-                    OVERLAY_DISP = Gfx_Texture4b(OVERLAY_DISP, dgLeveledUpIconENGTex, 48, 16, (s16)spBC.x + 4,
-                                                 (s16)spBC.y - 3, 48, 16, 1536, 1536);
-                    OVERLAY_DISP = Gfx_Texture4b(OVERLAY_DISP, dgLeveledUpTextBoxIconTex, 48, 24, (s16)spBC.x - 12,
-                                                 (s16)spBC.y - 3, 128, 64, 775, 575);
+                    OVERLAY_DISP = Gfx_Texture4b(OVERLAY_DISP, dgLeveledUpIconENGTex, 48, 16, (s16)spBC.x + 4, (s16)spBC.y - 3, 48, 16, 1536, 1536);
+                    OVERLAY_DISP = Gfx_Texture4b(OVERLAY_DISP, dgLeveledUpTextBoxIconTex, 48, 24, (s16)spBC.x - 12, (s16)spBC.y - 3, 128, 64, 775, 575);
                 }
             }
 
             if (i == 3) {
-                OVERLAY_DISP = Gfx_Texture32(OVERLAY_DISP, dgLeveledUpAttackIconTex, 32, 32, (s16)spBC.x, (s16)spBC.y,
-                                             32, 32, 4098, 4098);
+                OVERLAY_DISP = Gfx_Texture32(OVERLAY_DISP, dgLeveledUpAttackIconTex, 32, 32, (s16)spBC.x, (s16)spBC.y, 32, 32, 4098, 4098);
             }
             if (i == 4) {
-                OVERLAY_DISP = Gfx_Texture32(OVERLAY_DISP, dgLeveledUpDefenseIconTex, 32, 32, (s16)spBC.x, (s16)spBC.y,
-                                             32, 32, 4098, 4098);
+                OVERLAY_DISP = Gfx_Texture32(OVERLAY_DISP, dgLeveledUpDefenseIconTex, 32, 32, (s16)spBC.x, (s16)spBC.y, 32, 32, 4098, 4098);
             }
             if (i == 5) {
 
                 gDPPipeSync(OVERLAY_DISP++);
                 gDPSetTextureFilter(OVERLAY_DISP++, G_TF_AVERAGE);
 
-                OVERLAY_DISP = Gfx_Texture32(OVERLAY_DISP, dgLeveledUpHeartIconTex, 32, 32, (s16)spBC.x, (s16)spBC.y,
-                                             32, 32, 4098, 4098);
+                OVERLAY_DISP = Gfx_Texture32(OVERLAY_DISP, dgLeveledUpHeartIconTex, 32, 32, (s16)spBC.x - 1, (s16)spBC.y, 32, 32, 4098, 4098);
             }
 
             if (i == 6) {
-                OVERLAY_DISP = Gfx_Texture32(OVERLAY_DISP, dgLeveledUpMagicIconTex, 32, 32, (s16)spBC.x, (s16)spBC.y,
-                                             32, 32, 4098, 4098);
+                OVERLAY_DISP = Gfx_Texture32(OVERLAY_DISP, dgLeveledUpMagicIconTex, 32, 32, (s16)spBC.x + 1, (s16)spBC.y, 32, 32, 4098, 4098);
             }
         } else {
             if (i == 2) {

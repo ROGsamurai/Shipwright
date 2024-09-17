@@ -573,7 +573,7 @@ void DrawLevelCounterValue(FileChooseContext* this, s16 fileIndex, u8 alpha, Lev
         SpriteDraw(this, &levelcounterDigitSprites[tens], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET - 3 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 8, 8);
 
         SpriteLoad(this, &levelcounterDigitSprites[currentValue]);
-        SpriteDraw(this, &levelcounterDigitSprites[currentValue], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + 2 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 8, 8);
+        SpriteDraw(this, &levelcounterDigitSprites[currentValue], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + 3 + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 8, 8);
     } else {
         SpriteLoad(this, &levelcounterDigitSprites[currentValue]);
         SpriteDraw(this, &levelcounterDigitSprites[currentValue], LEFT_OFFSET + COUNTER_DIGITS_LEFT_OFFSET + data->pos.left, TOP_OFFSET + COUNTER_DIGITS_TOP_OFFSET + data->pos.top, 8, 8);
