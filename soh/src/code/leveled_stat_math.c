@@ -258,6 +258,8 @@ void Leveled_SetPlayerModifiedStats(Player* player) {
             default:
                 break;
         }
+
+        powerModifier += Player_GetStrength();
     }
 
     player->actor.powerModifier = powerModifier;
