@@ -37,7 +37,7 @@ void Title_PrintBuildInfo(Gfx** gfxp) {
     GfxPrint_SetPos(&printer, 1, 21);
     GfxPrint_Printf(&printer, "Leveled Mod Version: 1.1.2.1");
     GfxPrint_SetPos(&printer, 1, 22);
-    GfxPrint_Printf(&printer, "A Mod By Gotest");
+    GfxPrint_Printf(&printer, "A Mod By Gotest, AKA Arrenton");
 
     if (showGitInfo) {
         GfxPrint_SetPos(&printer, 1, 24);
