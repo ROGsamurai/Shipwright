@@ -1011,40 +1011,40 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
     // Health
     if (CVarGetInteger("LeveledAltAssets", 0)) {
         Leveled_DrawTex32(play, dgLeveledHeartIconTex, 32, 32, statX - 1, statY, 16, 16);
-        Leveled_DrawTexI8(play, dgLeveledCharSolidusTex, 8, 16,
-                          statX + (gSaveContext.healthCapacity2 >= 1000 ? 35 : 29) - 2, statY, 8, 8, 255, 255, 255);
-        u8 healthValX = 9;
-        Leveled_ValueNumberDraw(play, statX + healthValX - 1, statY, gSaveContext.health, 255, 255, 255);
-        healthValX = gSaveContext.healthCapacity2 >= 1000 ? 40 : 34;
-        Leveled_ValueNumberDraw(play, statX + healthValX - 2, statY, gSaveContext.healthCapacity2, 120, 255, 0);
+        u8 healthValX = gSaveContext.healthCapacity2 >= 1000 ? 12 : gSaveContext.healthCapacity2 >= 100 ? 6 : 0;
+        Leveled_ValueNumberDraw(play, statX + 8, statY, gSaveContext.health, 255, 255, 255);
+        Leveled_DrawTexI8(play, dgLeveledCharSolidusTex, 8, 16, statX + 21 + healthValX, statY, 8, 8, 255, 255, 255);
+        Leveled_ValueNumberDraw(play, statX + 27 + healthValX, statY, gSaveContext.healthCapacity2, 120, 255, 0);
         statY += 8;
     } else {
         Leveled_DrawTexIA8(play, dgHeartFullTex, 16, 16, statX + 2, statY, 8, 8, 255, 70, 0);
-        Leveled_DrawTexI8(play, dgMsgChar2FSolidusTex, 8, 16, statX + (gSaveContext.healthCapacity2 >= 1000 ? 35 : 29),
-                          statY - 1, 8, 9, 255, 255, 255);
-        u8 healthValX = 10;
-        Leveled_ValueNumberDraw(play, statX + healthValX, statY, gSaveContext.health, 255, 255, 255);
-        healthValX = gSaveContext.healthCapacity2 >= 1000 ? 40 : 34;
-        Leveled_ValueNumberDraw(play, statX + healthValX, statY, gSaveContext.healthCapacity2, 120, 255, 0);
+        u8 healthValX = gSaveContext.healthCapacity2 >= 1000 ? 12 : gSaveContext.healthCapacity2 >= 100 ? 6 : 0;
+        Leveled_ValueNumberDraw(play, statX + 10, statY, gSaveContext.health, 255, 255, 255);
+        Leveled_DrawTexI8(play, dgMsgChar2FSolidusTex, 8, 16, statX + 23 + healthValX, statY - 1, 8, 9, 255, 255, 255);
+        Leveled_ValueNumberDraw(play, statX + 28 + healthValX, statY, gSaveContext.healthCapacity2, 120, 255, 0);
         statY += 8;    
     }
 
     // Magic
     if (CVarGetInteger("LeveledAltAssets", 0)) {
         if (gSaveContext.magicCapacity > 0) {
+            u8 healthValX = gSaveContext.healthCapacity2 >= 1000 ? 12 : gSaveContext.healthCapacity2 >= 100 ? 6 : 0;
+            healthValX = gSaveContext.magicCapacity >= 100 ? 6 : 0;
             Leveled_DrawTex32(play, dgLeveledMagicIconTex, 32, 32, statX - 1, statY, 16, 16);
-            Leveled_DrawTexI8(play, dgLeveledCharSolidusTex, 8, 16, statX + 26, statY, 8, 8, 255, 255, 255);
             Leveled_ValueNumberDraw(play, statX + 8, statY, gSaveContext.magic, 255, 255, 255);
-            Leveled_ValueNumberDraw(play, statX + 32, statY, gSaveContext.magicCapacity, 120, 255, 0);
+            Leveled_DrawTexI8(play, dgLeveledCharSolidusTex, 8, 16, statX + 21 + healthValX, statY, 8, 8, 255, 255, 255);
+            Leveled_ValueNumberDraw(play, statX + 27 + healthValX, statY, gSaveContext.magicCapacity, 120, 255, 0);
             statY += 8;
         }
     } else {
         if (gSaveContext.magicCapacity > 0) {
-                Leveled_DrawTex32(play, dgQuestIconMagicJarBigTex, 24, 24, statX + 2, statY, 14, 14);
-                Leveled_DrawTexI8(play, dgMsgChar2FSolidusTex, 8, 16, statX + 29, statY - 1, 8, 9, 255, 255, 255);
-                Leveled_ValueNumberDraw(play, statX + 10, statY, gSaveContext.magic, 255, 255, 255);
-                Leveled_ValueNumberDraw(play, statX + 34, statY, gSaveContext.magicCapacity, 120, 255, 0);
-                statY += 8;
+            u8 healthValX = gSaveContext.healthCapacity2 >= 1000 ? 12 : gSaveContext.healthCapacity2 >= 100 ? 6 : 0;
+            healthValX = gSaveContext.magicCapacity >= 100 ? 6 : 0;
+            Leveled_DrawTex32(play, dgQuestIconMagicJarBigTex, 24, 24, statX + 2, statY, 14, 14);
+            Leveled_ValueNumberDraw(play, statX + 10, statY, gSaveContext.magic, 255, 255, 255);
+            Leveled_DrawTexI8(play, dgMsgChar2FSolidusTex, 8, 16, statX + 23 + healthValX, statY - 1, 8, 9, 255, 255, 255);
+            Leveled_ValueNumberDraw(play, statX + 28 + healthValX, statY, gSaveContext.magicCapacity, 120, 255, 0);
+            statY += 8;
         }
     }
 
