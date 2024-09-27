@@ -35,9 +35,9 @@ void Title_PrintBuildInfo(Gfx** gfxp) {
     bool showGitInfo = gGitCommitTag[0] == 0;
 
     GfxPrint_SetPos(&printer, 1, 21);
-    GfxPrint_Printf(&printer, "Leveled Mod By: Gotest AKA Arrenton");
+    GfxPrint_Printf(&printer, "Leveled Plus Mod By: iiTzSamurai");
     GfxPrint_SetPos(&printer, 1, 22);
-    GfxPrint_Printf(&printer, "Leveled Plus Mod By: iiTzSamurai" );
+    GfxPrint_Printf(&printer, "Leveled Mod By: Gotest AKA Arrenton");
 
     if (showGitInfo) {
         GfxPrint_SetPos(&printer, 1, 24);
