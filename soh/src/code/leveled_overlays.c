@@ -1014,7 +1014,7 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
         u8 healthValX = gSaveContext.healthCapacity2 >= 1000 ? 12 : gSaveContext.healthCapacity2 >= 100 ? 6 : 0;
         Leveled_ValueNumberDraw(play, statX + 8, statY, gSaveContext.health, 255, 255, 255);
         Leveled_DrawTexI8(play, dgLeveledCharSolidusTex, 8, 16, statX + 21 + healthValX, statY, 8, 8, 255, 255, 255);
-        Leveled_ValueNumberDraw(play, statX + 27 + healthValX, statY, gSaveContext.healthCapacity2, 120, 255, 0);
+        Leveled_ValueNumberDraw(play, statX + 26 + healthValX, statY, gSaveContext.healthCapacity2, 120, 255, 0);
         statY += 8;
     } else {
         Leveled_DrawTexIA8(play, dgHeartFullTex, 16, 16, statX + 2, statY, 8, 8, 255, 70, 0);
@@ -1033,7 +1033,7 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
             Leveled_DrawTex32(play, dgLeveledMagicIconTex, 32, 32, statX - 1, statY, 16, 16);
             Leveled_ValueNumberDraw(play, statX + 8, statY, gSaveContext.magic, 255, 255, 255);
             Leveled_DrawTexI8(play, dgLeveledCharSolidusTex, 8, 16, statX + 21 + healthValX, statY, 8, 8, 255, 255, 255);
-            Leveled_ValueNumberDraw(play, statX + 27 + healthValX, statY, gSaveContext.magicCapacity, 120, 255, 0);
+            Leveled_ValueNumberDraw(play, statX + 26 + healthValX, statY, gSaveContext.magicCapacity, 120, 255, 0);
             statY += 8;
         }
     } else {
@@ -1051,14 +1051,15 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
     // Attack
     if (CVarGetInteger("LeveledAltAssets", 0)) {
         Leveled_DrawTex32(play, dgLeveledAttackIconTex, 32, 32, statX, statY, 14, 14);
-        Leveled_ValueNumberDraw(play, statX + 8, statY, GetActorStat_Attack(attack, CLAMP(player->actor.power + player->actor.powerModifier, 0, 255)), 255, 115, 0);
+        if (CVarGetInteger("LeveledMaxedStats", 0)) {
+            Leveled_ValueNumberDraw(play, statX + 8, statY, GetActorStat_Attack(attack, CLAMP(player->actor.power + player->actor.powerModifier + 999, 0, 255)), 255, 115, 0);
+        } else {
+            Leveled_ValueNumberDraw(play, statX + 8, statY, GetActorStat_Attack(attack, CLAMP(player->actor.power + player->actor.powerModifier, 0, 255)), 255, 115, 0);
+        }
     statY += 8;
     } else {
         Leveled_DrawTex32(play, dgItemIconSwordKokiriTex, 32, 32, statX, statY - 1, 22, 20);
-        Leveled_ValueNumberDraw(
-            play, statX + 10, statY,
-            GetActorStat_Attack(attack, CLAMP(player->actor.power + player->actor.powerModifier, 0, 255)), 255, 255,
-            255);
+        Leveled_ValueNumberDraw(play, statX + 10, statY, GetActorStat_Attack(attack, CLAMP(player->actor.power + player->actor.powerModifier, 0, 255)), 255, 255, 255);
         statY += 8;
     }
 
@@ -1076,15 +1077,15 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
     //Power
     if (CVarGetInteger("LeveledAltAssets", 0)) {
         Leveled_DrawTex32(play, dgLeveledPowerIconTex, 32, 32, statX - 1, statY, 16, 16);
-        Leveled_ValueNumberDraw(play, statX + 8.5, statY,
-                                CLAMP(player->actor.power + player->actor.powerModifier, 0, 255), textColor.r,
-                                textColor.g, textColor.b);
+        if (CVarGetInteger("LeveledMaxedStats", 0)) {
+            Leveled_ValueNumberDraw(play, statX + 8.5, statY, CLAMP(player->actor.power + player->actor.powerModifier + 999, 0, 255), 120, 255, 0);
+        } else {
+            Leveled_ValueNumberDraw(play, statX + 8.5, statY, CLAMP(player->actor.power + player->actor.powerModifier, 0, 255), textColor.r, textColor.g, textColor.b);
+        }
         statY += 8;
     } else {
         Leveled_DrawTex32(play, dgItemIconSilverGauntletsTex, 32, 32, statX + 2, statY, 16, 16);
-        Leveled_ValueNumberDraw(play, statX + 10, statY,
-                                CLAMP(player->actor.power + player->actor.powerModifier, 0, 255), textColor.r,
-                                textColor.g, textColor.b);
+        Leveled_ValueNumberDraw(play, statX + 10, statY, CLAMP(player->actor.power + player->actor.powerModifier, 0, 255), textColor.r, textColor.g, textColor.b);
         statY += 8;
     }
 
@@ -1102,7 +1103,11 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
     // Defense
     if (CVarGetInteger("LeveledAltAssets", 0)) {
         Leveled_DrawTex32(play, dgLeveledDefenseIconTex, 32, 32, statX - 1, statY, 16, 16);
-        Leveled_ValueNumberDraw(play, statX + 8, statY, CLAMP(player->actor.courage + player->actor.courageModifier, 0, 255), textColor.r, textColor.g, textColor.b);
+        if (CVarGetInteger("LeveledMaxedStats", 0)) {
+            Leveled_ValueNumberDraw(play, statX + 8, statY, CLAMP(player->actor.courage + player->actor.courageModifier + 999, 0, 255), 120, 255, 0);
+        } else {
+            Leveled_ValueNumberDraw(play, statX + 8, statY, CLAMP(player->actor.courage + player->actor.courageModifier, 0, 255), textColor.r, textColor.g, textColor.b);
+        }
         statX = 90;
         statY += 60;
     if (gSaveContext.magicCapacity > 0) {

@@ -29,7 +29,31 @@ u16 GetActorStat_DisplayAttack(u16 attack, u8 power) {
 }
 
 u16 GetActorStat_Attack(u16 attack, u8 power) {
-    return (float)attack * (1 + (power - 2) * (0.14f + (power - 2) * 0.0006f));
+    if (CVarGetInteger("LeveledAltAssets", 0)) {
+        if (CVarGetInteger("LeveledMaxedStats", 0)) {
+            switch (CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD)) {
+                case PLAYER_SWORD_NONE:
+                    return (float)attack + 9999;
+                    break;
+
+                case PLAYER_SWORD_KOKIRI:
+                    return (float)attack + 9999 - 8;
+                    break;
+
+                case PLAYER_SWORD_MASTER:
+                    return (float)attack + 9999 - 17;
+                    break;
+
+                case PLAYER_SWORD_BIGGORON:
+                    return (float)attack + 9999 - 35;
+                    break;
+            }
+        } else {
+            return (float)attack * (1 + (power - 2) * (0.14f + (power - 2) * 0.0006f));
+        }
+    } else {
+        return (float)attack * (1 + (power - 2) * (0.14f + (power - 2) * 0.0006f));
+    }
 }
 
 f32 GetActorStat_EnemyAttack(u16 attack, u8 power) {
@@ -192,77 +216,157 @@ void Leveled_SetPlayerModifiedStats(Player* player) {
     s8 powerModifier = 0;
     s8 courageModifier = 0;
 
-    if (CVarGetInteger("gLeveled.Player.Enhancements.EquipmentStats", 1) == 1){
-        switch (CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD)){
-            case PLAYER_SWORD_MASTER:
-                courageModifier += 1;
-                break;
+    if (CVarGetInteger("LeveledAtlAssets", 0)) {
+        if (CVarGetInteger("gLeveled.Player.Enhancements.EquipmentStats", 1) == 1) {
+            if (CVarGetInteger("LeveledMaxedStats", 0)) {
+                switch (CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD)) {
+                    case PLAYER_SWORD_KOKIRI:
+                        powerModifier += 125;
+                        courageModifier += 125;
+                        break;
 
-            case PLAYER_SWORD_BIGGORON:
-                if (gBitFlags[3] & gSaveContext.inventory.equipment){
-                    powerModifier -= 7;
-                    courageModifier -= 12;
-                } else {
-                    powerModifier += 2;
-                    courageModifier -= 8;
+                    case PLAYER_SWORD_MASTER:
+                        powerModifier += 125;
+                        courageModifier += 125;
+                        break;
+
+                    case PLAYER_SWORD_BIGGORON:
+                            powerModifier += 125;
+                            courageModifier += 125;
+                        break;
                 }
-                break;
 
-            default:
-                break;
+                switch (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) - 1) {
+                    case PLAYER_TUNIC_KOKIRI:
+                        powerModifier = 125;
+                        courageModifier = 125;
+                        break;
+
+                    case PLAYER_TUNIC_GORON:
+                        powerModifier = 125;
+                        courageModifier = 125;
+                        break;
+
+                    case PLAYER_TUNIC_ZORA:
+                        powerModifier = 125;
+                        courageModifier = 125;
+                        break;
+                }
+
+                switch (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) {
+                    case PLAYER_SHIELD_DEKU:
+                        powerModifier = 125;
+                        courageModifier = 125;
+                        break;
+
+                    case PLAYER_SHIELD_HYLIAN:
+                        powerModifier = 125;
+                        courageModifier = 125;
+                        break;
+
+                    case PLAYER_SHIELD_MIRROR:
+                        powerModifier = 125;
+                        courageModifier = 125;
+                        break;
+                }
+
+                switch (CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS) - 1) {
+                    case PLAYER_BOOTS_KOKIRI:
+                        powerModifier = 125;
+                        courageModifier = 125;
+                        break;
+
+                    case PLAYER_BOOTS_IRON:
+                        powerModifier = 125;
+                        courageModifier = 125;
+                        break;
+
+                    case PLAYER_BOOTS_HOVER:
+                        powerModifier = 125;
+                        courageModifier = 125;
+                        break;
+                }
+
+                powerModifier += Player_GetStrength();
+            }
         }
-        
-        switch (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) - 1){
-            case PLAYER_TUNIC_GORON:
-                powerModifier += 3;
-                courageModifier -= 3;
-                break;
-            
-            case PLAYER_TUNIC_ZORA:
-                powerModifier -= 3;
-                courageModifier += 3;
-                break;
 
-            default:
-                break;
+        player->actor.powerModifier = powerModifier;
+        player->actor.courageModifier = courageModifier;
+
+    } else {
+        if (CVarGetInteger("gLeveled.Player.Enhancements.EquipmentStats", 1) == 1) {        
+            switch (CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD)) {
+                case PLAYER_SWORD_MASTER:
+                    courageModifier += 1;
+                    break;
+
+                case PLAYER_SWORD_BIGGORON:
+                    if (gBitFlags[3] & gSaveContext.inventory.equipment) {
+                        powerModifier -= 7;
+                        courageModifier -= 12;
+                    } else {
+                        powerModifier += 2;
+                        courageModifier -= 8;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) - 1) {
+                case PLAYER_TUNIC_GORON:
+                    powerModifier += 3;
+                    courageModifier -= 3;
+                    break;
+
+                case PLAYER_TUNIC_ZORA:
+                    powerModifier -= 3;
+                    courageModifier += 3;
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) {
+                case PLAYER_SHIELD_DEKU:
+                    courageModifier += 1;
+                    break;
+
+                case PLAYER_SHIELD_HYLIAN:
+                    courageModifier += 2;
+                    break;
+
+                case PLAYER_SHIELD_MIRROR:
+                    powerModifier -= 2;
+                    courageModifier += 3;
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS) - 1) {
+                case PLAYER_BOOTS_IRON:
+                    powerModifier += 2;
+                    courageModifier += 1;
+                    break;
+
+                case PLAYER_BOOTS_HOVER:
+                    courageModifier -= 1;
+                    break;
+
+                default:
+                    break;
+            }
+
+            powerModifier += Player_GetStrength();
         }
-        
-        switch (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)){
-            case PLAYER_SHIELD_DEKU:
-                courageModifier += 1;
-                break;
-
-            case PLAYER_SHIELD_HYLIAN:
-                courageModifier += 2;
-                break;
-            
-            case PLAYER_SHIELD_MIRROR:
-                powerModifier -= 2;
-                courageModifier += 3;
-                break;
-
-            default:
-                break;
-        }
-        
-        switch (CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS) - 1){
-            case PLAYER_BOOTS_IRON:
-                powerModifier += 2;
-                courageModifier += 1;
-                break;
-            
-            case PLAYER_BOOTS_HOVER:
-                courageModifier -= 1;
-                break;
-
-            default:
-                break;
-        }
-
-        powerModifier += Player_GetStrength();
-
     }
 
     player->actor.powerModifier = powerModifier;
     player->actor.courageModifier = courageModifier;
+
 }

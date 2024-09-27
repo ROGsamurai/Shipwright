@@ -2135,18 +2135,45 @@ void DrawLeveledMenu() {
             }
             ImGui::EndMenu();
         }
-        //Leveled HD Assets Toggle
         
-        if (ImGui::BeginMenu("Graphics")) {
-            UIWidgets::PaddedEnhancementCheckbox("Use Alternate Leveled Assets", ("LeveledAltAssets"), false, false);
-            UIWidgets::Tooltip("Enables Alternate Assets For Leveled Mod");
+        // Leveled Plus Menu
+        if (ImGui::BeginMenu("Leveled Plus")) {
+            UIWidgets::PaddedEnhancementCheckbox("Enable Leveled Plus", ("LeveledAltAssets"), false, false);
+            UIWidgets::Tooltip("Enables Leveled Plus");
+            if (CVarGetInteger("LeveledAltAssets", 0)) {
+                if (ImGui::BeginMenu("Cheats")) {
+                    UIWidgets::PaddedEnhancementCheckbox("Max Leveled Stats", ("LeveledMaxedStats"), false, false);
+                    UIWidgets::Tooltip("Max out your Attack, Power & Defense Stats");
+                    if (ImGui::BeginMenu("Add Xp")) {
+                        if (ImGui::Button("Add 50xp")) {
+                            gSaveContext.experience += 50;
+                        }
+                        if (ImGui::Button("Add 100xp")) {
+                            gSaveContext.experience += 100;
+                        }
+                        if (ImGui::Button("Add 500xp")) {
+                            gSaveContext.experience += 500;
+                        }
+                        if (ImGui::Button("Add 1000xp")) {
+                            gSaveContext.experience += 1000;
+                        }
+                        if (ImGui::Button("Add 2500xp")) {
+                            gSaveContext.experience += 2500;
+                        }
+                        if (ImGui::Button("Add 5000xp")) {
+                            gSaveContext.experience += 5000;
+                        }
+                        if (ImGui::Button("Max Leveled")) {
+                            gSaveContext.experience += 999999;
+                        }
+                        ImGui::EndMenu();
+                    }
+                    ImGui::EndMenu();
+                }
+            }
             ImGui::EndMenu();
         }
-
-        // if (ImGui::Button("Add 2000 EXP")){
-        //     gSaveContext.experience += 2000;
-        // }
-
+        // END Leveled Plus Menu
         ImGui::EndMenu();
     }
 }
