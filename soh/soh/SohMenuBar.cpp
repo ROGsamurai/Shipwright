@@ -2144,7 +2144,7 @@ void DrawLeveledMenu() {
         // Leveled Plus Menu
         if (ImGui::BeginMenu("Leveled Plus")) {
             UIWidgets::PaddedEnhancementCheckbox("Enable Leveled Plus", CVAR_ENHANCEMENT("LeveledPlus"), false, false);
-            UIWidgets::Tooltip("Enables Leveled Plus");
+            UIWidgets::Tooltip("Enables Leveled Mod Enhancements");
             if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
                 if (ImGui::BeginMenu("Cheats")) {
                     UIWidgets::PaddedEnhancementCheckbox("Max Leveled Stats", CVAR_CHEAT("LeveledMaxedStats"), false, false);
