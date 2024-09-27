@@ -2082,8 +2082,9 @@ void DrawLeveledMenu() {
 
                 ImGui::EndMenu();
             }
-            if (CVarGetInteger("LeveledAltAssets", 1) == 1) {
-
+            if (CVarGetInteger("LeveledAltAssets", 0) == 1) {
+                UIWidgets::EnhancementSliderInt("Enemy HP and Link's Attack Multiplier: %dx", "##LeveledHPandAttackDamageMultiplier", "gLeveled.Enhancements.AttackAndHPMultiplier", 9, 9, "Maxed Out", 9, true, true);
+                UIWidgets::Tooltip("Changes Link's Attack and enemy HP multiplier. This doesn't change balance, but rather the size of numbers.");
             } else {
                 UIWidgets::EnhancementSliderInt("Enemy HP and Link's Attack Multiplier: %dx", "##LeveledHPandAttackDamageMultiplier", "gLeveled.Enhancements.AttackAndHPMultiplier", 1, 32, "", 9, true, false);
                 UIWidgets::Tooltip("Changes Link's Attack and enemy HP multiplier. This doesn't change balance, but rather the size of numbers.");

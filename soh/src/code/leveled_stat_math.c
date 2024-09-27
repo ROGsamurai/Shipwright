@@ -21,7 +21,15 @@ static u32 sExpTable[] = { 0,      30,     64,     105,    155,    217,    292, 
   691249, 718461, 746448, 775226, 804807, 835208, 866441, 898523, 931466, 965287, 999999 };*/
 
 u8 Leveled_GetHealthAttackMultiplier() {
-    return CLAMP(CVarGetInteger("gLeveled.Enhancements.AttackAndHPMultiplier", 9), 1, 32);
+    if (CVarGetInteger("LeveledAltAssets", 0)) {
+        if (CVarGetInteger("LeveledMaxedStats", 0)) {
+            return CLAMP(CVarGetInteger("gLeveled.Enhancements.AttackAndHPMultiplier", 9), 9, 9);
+        } else {
+            return CLAMP(CVarGetInteger("gLeveled.Enhancements.AttackAndHPMultiplier", 9), 1, 32);
+        }
+    } else {
+        return CLAMP(CVarGetInteger("gLeveled.Enhancements.AttackAndHPMultiplier", 9), 1, 32);
+    }
 }
 
 u16 GetActorStat_DisplayAttack(u16 attack, u8 power) {
