@@ -2082,7 +2082,7 @@ void DrawLeveledMenu() {
 
                 ImGui::EndMenu();
             }
-            if (CVarGetInteger("LeveledAltAssets", 0) == 1) {
+            if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0) == 1) {
                 UIWidgets::EnhancementSliderInt("Enemy HP and Link's Attack Multiplier: %dx", "##LeveledHPandAttackDamageMultiplier", "gLeveled.Enhancements.AttackAndHPMultiplier", 9, 9, "Maxed Out", 9, true, true);
                 UIWidgets::Tooltip("Changes Link's Attack and enemy HP multiplier. This doesn't change balance, but rather the size of numbers.");
             } else {
@@ -2143,11 +2143,11 @@ void DrawLeveledMenu() {
         
         // Leveled Plus Menu
         if (ImGui::BeginMenu("Leveled Plus")) {
-            UIWidgets::PaddedEnhancementCheckbox("Enable Leveled Plus", ("LeveledAltAssets"), false, false);
+            UIWidgets::PaddedEnhancementCheckbox("Enable Leveled Plus", CVAR_ENHANCEMENT("LeveledPlus"), false, false);
             UIWidgets::Tooltip("Enables Leveled Plus");
-            if (CVarGetInteger("LeveledAltAssets", 0)) {
+            if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
                 if (ImGui::BeginMenu("Cheats")) {
-                    UIWidgets::PaddedEnhancementCheckbox("Max Leveled Stats", ("LeveledMaxedStats"), false, false);
+                    UIWidgets::PaddedEnhancementCheckbox("Max Leveled Stats", CVAR_CHEAT("LeveledMaxedStats"), false, false);
                     UIWidgets::Tooltip("Max out your Attack, Power & Defense Stats");
                     if (ImGui::BeginMenu("Add Xp")) {
                         if (ImGui::Button("Add 50xp")) {

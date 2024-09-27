@@ -21,8 +21,8 @@ static u32 sExpTable[] = { 0,      30,     64,     105,    155,    217,    292, 
   691249, 718461, 746448, 775226, 804807, 835208, 866441, 898523, 931466, 965287, 999999 };*/
 
 u8 Leveled_GetHealthAttackMultiplier() {
-    if (CVarGetInteger("LeveledAltAssets", 0)) {
-        if (CVarGetInteger("LeveledMaxedStats", 0)) {
+    if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
+        if (CVarGetInteger(CVAR_CHEAT("LeveledMaxedStats"), 0)) {
             return CLAMP(CVarGetInteger("gLeveled.Enhancements.AttackAndHPMultiplier", 9), 9, 9);
         } else {
             return CLAMP(CVarGetInteger("gLeveled.Enhancements.AttackAndHPMultiplier", 9), 1, 32);
@@ -37,8 +37,8 @@ u16 GetActorStat_DisplayAttack(u16 attack, u8 power) {
 }
 
 u16 GetActorStat_Attack(u16 attack, u8 power) {
-    if (CVarGetInteger("LeveledAltAssets", 0)) {
-        if (CVarGetInteger("LeveledMaxedStats", 0)) {
+    if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
+        if (CVarGetInteger(CVAR_CHEAT("LeveledMaxedStats"), 0)) {
             switch (CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD)) {
                 case PLAYER_SWORD_NONE:
                     return (float)attack + 9999;
@@ -226,7 +226,7 @@ void Leveled_SetPlayerModifiedStats(Player* player) {
 
     if (CVarGetInteger("LeveledAtlAssets", 0)) {
         if (CVarGetInteger("gLeveled.Player.Enhancements.EquipmentStats", 1) == 1) {
-            if (CVarGetInteger("LeveledMaxedStats", 0)) {
+            if (CVarGetInteger(CVAR_CHEAT("LeveledMaxedStats"), 0)) {
                 switch (CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD)) {
                     case PLAYER_SWORD_KOKIRI:
                         powerModifier += 125;

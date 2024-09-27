@@ -355,6 +355,11 @@ const std::vector<const char*> cheatCvars = {
     CVAR_COSMETIC("Link.SwordScale.Changed"),
     CVAR_COSMETIC("Link.SwordScale.Value"),
     CVAR_ENHANCEMENT("RememberMapToggleState"),
+
+    // Leveled CVAR
+    CVAR_CHEAT("LeveledMaxedStats"),
+    CVAR_ENHANCEMENT("LeveledPlus"),
+    // End Leveled CVAR
 };
 
 const std::vector<const char*> randomizerCvars = {

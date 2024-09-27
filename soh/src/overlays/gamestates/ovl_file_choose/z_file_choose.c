@@ -936,7 +936,7 @@ static void DrawCounters(FileChooseContext* this, s16 fileIndex, u8 alpha) {
 static void DrawMoreInfo(FileChooseContext* this, s16 fileIndex, u8 alpha) {
     DrawItems(this, fileIndex, alpha);
     DrawCounters(this, fileIndex, alpha);
-    if (CVarGetInteger("LeveledAltAssets", 0)) {
+    if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
         DrawLevelCounters(this, fileIndex, alpha);
     }
 }
@@ -2243,7 +2243,7 @@ void FileChoose_SetWindowContentVtx(GameState* thisx) {
     // Level count
     if (CVarGetInteger(CVAR_ENHANCEMENT("FileSelectMoreInfo"), 0) == 0 || this->menuMode != FS_MENU_MODE_SELECT) {
         // Lv Icon & Number Position Without More Info
-        if (CVarGetInteger("LeveledAltAssets", 0)) {
+        if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
             phi_t0 = this->windowPosX + 30;
             temp_t1 = 24;
             for (phi_a1 = 0; phi_a1 < 2; phi_a1++, phi_t2 += 4) {
@@ -2391,7 +2391,7 @@ void FileChoose_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
         // draw level
         if (CVarGetInteger(CVAR_ENHANCEMENT("FileSelectMoreInfo"), 0) == 0 || this->menuMode != FS_MENU_MODE_SELECT) {
             gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[648], 32, 0);
-            if (CVarGetInteger("LeveledAltAssets", 0)) {
+            if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
                 gDPSetPrimColor(POLY_OPA_DISP++, 0x00, 0x00, 255, 255, 255, this->fileInfoAlpha[fileIndex]);
             } else {
                 gDPSetPrimColor(POLY_OPA_DISP++, 0x00, 0x00, 255, 255, 0, this->fileInfoAlpha[fileIndex]);
@@ -2400,13 +2400,13 @@ void FileChoose_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
             char lvText[] = { 21, 57 };
 
             for (i = 0, vtxOffset = 0; i < 2; i++, vtxOffset += 4) {
-                if (CVarGetInteger("LeveledAltAssets", 0)) {
+                if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
                     LeveledFileChoose_DrawImageRGBA32(this->state.gfxCtx, 111, 112, gLevelCounterLvIconTex, 32, 32);
                 } else {
                     FileChoose_DrawCharacter(this->state.gfxCtx, sp54->fontBuf + lvText[i] * FONT_CHAR_TEX_SIZE, vtxOffset);
                 }
             }
-            if (CVarGetInteger("LeveledAltAssets", 0)) {
+            if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
                 gDPPipeSync(POLY_OPA_DISP++);
                 gDPSetCombineLERP(POLY_OPA_DISP++, 1, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0, 1, 0, PRIMITIVE, 0,
                                   TEXEL0, 0, PRIMITIVE, 0);
@@ -2434,7 +2434,7 @@ void FileChoose_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
          
         } else {
             gSPVertex(POLY_OPA_DISP++, &this->windowContentVtx[648], 12, 0);
-            if (CVarGetInteger("LeveledAltAssets", 0)) {
+            if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
                 gDPSetPrimColor(POLY_OPA_DISP++, 0x00, 0x01, 255, 255, 255, this->fileInfoAlpha[fileIndex]);
             } else {
                 gDPSetPrimColor(POLY_OPA_DISP++, 0x00, 0x01, 255, 255, 0, this->fileInfoAlpha[fileIndex]);
@@ -2442,14 +2442,14 @@ void FileChoose_DrawFileInfo(GameState* thisx, s16 fileIndex, s16 isActive) {
             char lvText[] = { 21, 57 };
 
             for (i = 0, vtxOffset = 0; i < 2; i++, vtxOffset += 4) {
-                if (CVarGetInteger("LeveledAltAssets", 0)) {
+                if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
                     LeveledFileChoose_DrawImageRGBA32(this->state.gfxCtx, 113, 122, gLevelCounterLvIconTex, 32, 32);
                 } else {
                     FileChoose_DrawCharacter(this->state.gfxCtx, sp54->fontBuf + lvText[i] * FONT_CHAR_TEX_SIZE, vtxOffset);
 
                 }
             }
-            if (CVarGetInteger("LeveledAltAssets", 0)) {
+            if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
 
             } else {
                 gDPPipeSync(POLY_OPA_DISP++);

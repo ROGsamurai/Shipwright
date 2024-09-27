@@ -189,7 +189,7 @@ void ActorLevelUp_New(Actor* actor, u8 powerDiff, u8 courageDiff, u16 healthDiff
 }
 
 void ActorExperienceNumber_Draw(PlayState* play, Actor* actor) {
-    if (CVarGetInteger("LeveledAltAssets", 0)) {
+    if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
         extern const char* LevelCounterDigitTextures[];
         s16 val = actor->floatingNumber[1];
         u8 digit[] = { 0, 0, 0, 0, 0 };
@@ -371,7 +371,7 @@ void ActorExperienceNumber_Draw(PlayState* play, Actor* actor) {
 }
 
 void ActorDamageNumber_Draw(PlayState* play, Actor* actor) {
-    if (CVarGetInteger("LeveledAltAssets", 0)) {
+    if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
         extern const char* LevelCounterDigitTextures[];
         s16 val = actor->floatingNumber[0];
         u8 digit[] = { 0, 0, 0, 0 };
@@ -602,7 +602,7 @@ void Actor_LevelUpDraw(PlayState* play, Actor* actor) {
                           PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
         
     // Leveled Up Overlay    
-        if (CVarGetInteger("LeveledAltAssets", 0)) {
+        if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
             if (i == 2) {
 
                 for (u8 j = 0; j < 3; j++) {
@@ -677,7 +677,7 @@ void Actor_LevelUpDraw(PlayState* play, Actor* actor) {
 }
 
 void Leveled_ValueNumberDraw(PlayState* play, u16 x, u16 y, u32 value, u8 r, u8 g, u8 b) {
-    if (CVarGetInteger("LeveledAltAssets", 0)) {
+    if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
         extern const char* LevelCounterStatDigitTextures[];
         s32 val;
         u8 digit[] = { 0, 0, 0, 0, 0, 0 };
@@ -817,7 +817,7 @@ void Leveled_ValueNumberDraw(PlayState* play, u16 x, u16 y, u32 value, u8 r, u8 
 }
 
 void Leveled_BigValueNumberDraw(PlayState* play, u16 x, u16 y, u32 value, u8 r, u8 g, u8 b, u8 a) {
-    if (CVarGetInteger("LeveledAltAssets", 0)) {
+    if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
         extern const char* LevelCounterDigitTextures[];
         s32 val;
         u8 digit[] = { 0, 0, 0, 0, 0, 0 };
@@ -996,7 +996,7 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
 
     // Values and Icons
     // Level
-    if (CVarGetInteger("LeveledAltAssets", 0)) {
+    if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
         Leveled_DrawTex32(play, dgLeveledLvIconENGTex, 32, 32, statX + 3, statY - 8, 19, 19);
         Leveled_BigValueNumberDraw(play, statX + 14, statY - 12, player->actor.level, 255, 255, 255, 0);
         statY += 3;
@@ -1009,7 +1009,7 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
     }
 
     // Health
-    if (CVarGetInteger("LeveledAltAssets", 0)) {
+    if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
         Leveled_DrawTex32(play, dgLeveledHeartIconTex, 32, 32, statX - 1, statY, 16, 16);
         u8 healthValX = gSaveContext.healthCapacity2 >= 1000 ? 12 : gSaveContext.healthCapacity2 >= 100 ? 6 : 0;
         Leveled_ValueNumberDraw(play, statX + 8, statY, gSaveContext.health, 255, 255, 255);
@@ -1026,7 +1026,7 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
     }
 
     // Magic
-    if (CVarGetInteger("LeveledAltAssets", 0)) {
+    if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
         if (gSaveContext.magicCapacity > 0) {
             u8 healthValX = gSaveContext.healthCapacity2 >= 1000 ? 12 : gSaveContext.healthCapacity2 >= 100 ? 6 : 0;
             healthValX = gSaveContext.magicCapacity >= 100 ? 6 : 0;
@@ -1049,9 +1049,9 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
     }
 
     // Attack
-    if (CVarGetInteger("LeveledAltAssets", 0)) {
+    if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
         Leveled_DrawTex32(play, dgLeveledAttackIconTex, 32, 32, statX, statY, 14, 14);
-        if (CVarGetInteger("LeveledMaxedStats", 0)) {
+        if (CVarGetInteger(CVAR_CHEAT("LeveledMaxedStats"), 0)) {
             Leveled_ValueNumberDraw(play, statX + 8, statY, GetActorStat_Attack(attack, CLAMP(player->actor.power + player->actor.powerModifier + 999, 0, 255)), 255, 115, 0);
         } else {
             Leveled_ValueNumberDraw(play, statX + 8, statY, GetActorStat_Attack(attack, CLAMP(player->actor.power + player->actor.powerModifier, 0, 255)), 255, 115, 0);
@@ -1075,9 +1075,9 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
     }
 
     //Power
-    if (CVarGetInteger("LeveledAltAssets", 0)) {
+    if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
         Leveled_DrawTex32(play, dgLeveledPowerIconTex, 32, 32, statX - 1, statY, 16, 16);
-        if (CVarGetInteger("LeveledMaxedStats", 0)) {
+        if (CVarGetInteger(CVAR_CHEAT("LeveledMaxedStats"), 0)) {
             Leveled_ValueNumberDraw(play, statX + 8.5, statY, CLAMP(player->actor.power + player->actor.powerModifier + 999, 0, 255), 120, 255, 0);
         } else {
             Leveled_ValueNumberDraw(play, statX + 8.5, statY, CLAMP(player->actor.power + player->actor.powerModifier, 0, 255), textColor.r, textColor.g, textColor.b);
@@ -1101,9 +1101,9 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
     }
 
     // Defense
-    if (CVarGetInteger("LeveledAltAssets", 0)) {
+    if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
         Leveled_DrawTex32(play, dgLeveledDefenseIconTex, 32, 32, statX - 1, statY, 16, 16);
-        if (CVarGetInteger("LeveledMaxedStats", 0)) {
+        if (CVarGetInteger(CVAR_CHEAT("LeveledMaxedStats"), 0)) {
             Leveled_ValueNumberDraw(play, statX + 8, statY, CLAMP(player->actor.courage + player->actor.courageModifier + 999, 0, 255), 120, 255, 0);
         } else {
             Leveled_ValueNumberDraw(play, statX + 8, statY, CLAMP(player->actor.courage + player->actor.courageModifier, 0, 255), textColor.r, textColor.g, textColor.b);
@@ -1126,7 +1126,7 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
     }
 
     // XP Needed
-    if (CVarGetInteger("LeveledAltAssets", 0)) {
+    if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
         Leveled_DrawTex4b(play, dgLeveledXpNeededIconENGTex, 48, 16, statX, statY - 4, 56, 24);
         Leveled_DrawTexI8(play, dgLeveledCharSolidusTex, 8, 16, statX + 28, statY - 2, 8, 8, 255, 255, 255);
         Leveled_ValueNumberDraw(play, statX + 34, statY - 2, GetActorStat_NextLevelExp(player->actor.level, gSaveContext.experience), 0, 180, 255);
@@ -1139,7 +1139,7 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
     }
 
     // Total Xp
-    if (CVarGetInteger("LeveledAltAssets", 0)) {
+    if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
         Leveled_DrawTex4b(play, dgLeveledTotalXpIconENGTex, 48, 16, statX, statY - 4, 56, 24);
         Leveled_DrawTexI8(play, dgLeveledCharSolidusTex, 8, 16, statX + 28, statY - 2, 8, 8, 255, 255, 255);
         Leveled_ValueNumberDraw(play, statX + 34, statY - 2, gSaveContext.experience, 0, 180, 255);
@@ -1151,7 +1151,7 @@ void Leveled_KaleidoEquip_Stats(PlayState* play) {
 }
 
 void Leveled_Interface_DrawNextLevel(PlayState* play) {
-    if (CVarGetInteger("LeveledAltAssets", 0)) {
+    if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
         extern const char* LevelCounterDigitTextures[];
         if (gSaveContext.showNeededExpTimer > 0) {
             gSaveContext.showNeededExpTimer--;
