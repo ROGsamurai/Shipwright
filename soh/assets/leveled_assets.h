@@ -131,4 +131,7 @@ static const ALIGN_ASSET(2) char gLeveledXpNeededHudIconENGTex[] = dgLeveledXpNe
 #define dgLeveledCharSolidusTex "__OTR__leveled/other/gLeveledCharSolidusTex"
 static const ALIGN_ASSET(2) char gLeveledCharSolidusTex[] = dgLeveledCharSolidusTex;
 
+#define iiTzSamurai "Leveled Plus Mod By: iiTzSamurai"
+#define Gotest_aka_Arrenton "Leveled Mod By: Gotest AKA Arrenton"
+
 #endif // LEVELED_ASSETS_H

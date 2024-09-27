@@ -2171,15 +2171,39 @@ void DrawLeveledMenu() {
                         if (ImGui::Button("Max Leveled")) {
                             gSaveContext.experience += 999999;
                         }
-                        ImGui::EndMenu();
-                    }
                     ImGui::EndMenu();
+                    }
+                    if (ImGui::BeginMenu("Remove Xp")) {
+                        if (ImGui::Button("Remove 50xp")) {
+                            gSaveContext.experience -= 50;
+                        }
+                        if (ImGui::Button("Remove 100xp")) {
+                            gSaveContext.experience -= 100;
+                        }
+                        if (ImGui::Button("Remove 500xp")) {
+                            gSaveContext.experience -= 500;
+                        }
+                        if (ImGui::Button("Remove 1000xp")) {
+                            gSaveContext.experience -= 1000;
+                        }
+                        if (ImGui::Button("Remove 2500xp")) {
+                            gSaveContext.experience -= 2500;
+                        }
+                        if (ImGui::Button("Remove 5000xp")) {
+                            gSaveContext.experience -= 5000;
+                        }
+                        if (ImGui::Button("Remove 10000xp")) {
+                            gSaveContext.experience -= 10000;
+                        }
+                    ImGui::EndMenu();
+                    }
+                ImGui::EndMenu();   
                 }
             }
-            ImGui::EndMenu();
+        ImGui::EndMenu();
         }
         // END Leveled Plus Menu
-        ImGui::EndMenu();
+    ImGui::EndMenu();
     }
 }
 
