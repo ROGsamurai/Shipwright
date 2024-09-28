@@ -132,7 +132,7 @@ void ActorDamageNumber_New(Actor* actor, u16 damage) {
     actor->floatingNumberVelocity[0] = velocity;
 }
 
-void ActorExperienceNumber_New(Actor* actor, u16 experience, s16 experienceChange) {
+void ActorExperienceNumber_New(Actor* actor, u16 experience) {
     if (experience == 0 || !CVarGetInteger("gLeveled.HUD.FloatingNumbers.ExpGain", 1))
         return;
 
