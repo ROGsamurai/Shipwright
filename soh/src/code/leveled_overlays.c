@@ -117,6 +117,7 @@ const char* LevelCounterStatDigitTextures[] = {
     gLevelMICounterDigit6Tex, gLevelMICounterDigit7Tex, gLevelMICounterDigit8Tex,
     gLevelMICounterDigit9Tex 
 };
+// End Leveled Counters For Stats & Lv
 
 void ActorDamageNumber_New(Actor* actor, u16 damage) {
     if (damage == 0 || (actor->category == ACTORCAT_PLAYER && !CVarGetInteger("gLeveled.HUD.FloatingNumbers.PlayerDamage", 1)) || (actor->category != ACTORCAT_PLAYER && !CVarGetInteger("gLeveled.HUD.FloatingNumbers.EnemyDamage", 1)))
@@ -131,7 +132,7 @@ void ActorDamageNumber_New(Actor* actor, u16 damage) {
     actor->floatingNumberVelocity[0] = velocity;
 }
 
-void ActorExperienceNumber_New(Actor* actor, u16 experience) {
+void ActorExperienceNumber_New(Actor* actor, u16 experience, s16 experienceChange) {
     if (experience == 0 || !CVarGetInteger("gLeveled.HUD.FloatingNumbers.ExpGain", 1))
         return;
 

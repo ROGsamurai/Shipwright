@@ -34,6 +34,7 @@ static const ALIGN_ASSET(2) char gLeveledTotalXpIconENGTex[] = dgLeveledTotalXpI
 
 #define dgLeveledXpNeededIconENGTex "__OTR__leveled/stats/gLeveledXpNeededIconENGTex"
 static const ALIGN_ASSET(2) char gLeveledXpNeededIconENGTex[] = dgLeveledXpNeededIconENGTex;
+// End Leveled Stat Textures
 
 // Leveled Up Overlay Textures
 #define dgLeveledUpHeartIconTex "__OTR__leveled/overlay/gLeveledUpHeartIconTex"
@@ -53,6 +54,7 @@ static const ALIGN_ASSET(2) char gLeveledUpIconENGTex[] = dgLeveledUpIconENGTex;
 
 #define dgLeveledUpTextBoxIconTex "__OTR__leveled/overlay/gLeveledUpTextBoxIconTex"
 static const ALIGN_ASSET(2) char gLeveledUpTextBoxIconTex[] = dgLeveledUpTextBoxIconTex;
+// End Leveled Up Overlay Textures
 
 // Leveled Counter Textures
 #define dgLevelCounterLvIconTex "__OTR__leveled/counter/gLevelCounterLvIconTex"
@@ -130,8 +132,11 @@ static const ALIGN_ASSET(2) char gLeveledXpNeededHudIconENGTex[] = dgLeveledXpNe
 
 #define dgLeveledCharSolidusTex "__OTR__leveled/other/gLeveledCharSolidusTex"
 static const ALIGN_ASSET(2) char gLeveledCharSolidusTex[] = dgLeveledCharSolidusTex;
+// End Other Leveled Textures
 
+// Title Watermark
 #define iiTzSamurai "Leveled Plus Mod By: iiTzSamurai"
 #define Gotest_aka_Arrenton "Leveled Mod By: Gotest AKA Arrenton"
+// End Title Watermark
 
 #endif // LEVELED_ASSETS_H

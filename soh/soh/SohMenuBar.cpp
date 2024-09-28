@@ -2147,8 +2147,10 @@ void DrawLeveledMenu() {
             UIWidgets::Tooltip("Enables Leveled Mod Enhancements");
             if (CVarGetInteger(CVAR_ENHANCEMENT("LeveledPlus"), 0)) {
                 if (ImGui::BeginMenu("Cheats")) {
-                    UIWidgets::PaddedEnhancementCheckbox("Max Leveled Stats", CVAR_CHEAT("LeveledMaxedStats"), false, false);
+                    UIWidgets::PaddedEnhancementCheckbox("Maxed Leveled Stats", CVAR_CHEAT("LeveledMaxedStats"), false, false);
                     UIWidgets::Tooltip("Max out your Attack, Power & Defense Stats");
+                    UIWidgets::PaddedEnhancementCheckbox("All Positive Stats", CVAR_CHEAT("LeveledAllPlusStats"), false, false);
+                    UIWidgets::Tooltip("All Stats are Positive when changing Equipment");
                     if (ImGui::BeginMenu("Add Xp")) {
                         if (ImGui::Button("Add 50xp")) {
                             gSaveContext.experience += 50;

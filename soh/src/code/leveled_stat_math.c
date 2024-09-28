@@ -226,6 +226,7 @@ void Leveled_SetPlayerModifiedStats(Player* player) {
 
     if (CVarGetInteger("LeveledAtlAssets", 0)) {
         if (CVarGetInteger("gLeveled.Player.Enhancements.EquipmentStats", 1) == 1) {
+            // Begin Leveled Maxed Stats Cheat
             if (CVarGetInteger(CVAR_CHEAT("LeveledMaxedStats"), 0)) {
                 switch (CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD)) {
                     case PLAYER_SWORD_KOKIRI:
@@ -301,9 +302,82 @@ void Leveled_SetPlayerModifiedStats(Player* player) {
 
         player->actor.powerModifier = powerModifier;
         player->actor.courageModifier = courageModifier;
+        // End Leveled Maxed Stats Cheat
 
-    } else {
+    // Begin Leveled Plus Stats Cheat
+    } else if (CVarGetInteger(CVAR_CHEAT("LeveledAllPlusStats"), 0)) {
         if (CVarGetInteger("gLeveled.Player.Enhancements.EquipmentStats", 1) == 1) {        
+            switch (CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD)) {
+                case PLAYER_SWORD_MASTER:
+                    courageModifier += 1;
+                    break;
+
+                case PLAYER_SWORD_BIGGORON:
+                    if (gBitFlags[3] & gSaveContext.inventory.equipment) {
+                        powerModifier += 7;
+                        courageModifier += 12;
+                    } else {
+                        powerModifier += 2;
+                        courageModifier += 8;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (CUR_EQUIP_VALUE(EQUIP_TYPE_TUNIC) - 1) {
+                case PLAYER_TUNIC_GORON:
+                    powerModifier += 3;
+                    courageModifier += 3;
+                    break;
+
+                case PLAYER_TUNIC_ZORA:
+                    powerModifier += 3;
+                    courageModifier += 3;
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (CUR_EQUIP_VALUE(EQUIP_TYPE_SHIELD)) {
+                case PLAYER_SHIELD_DEKU:
+                    courageModifier += 1;
+                    break;
+
+                case PLAYER_SHIELD_HYLIAN:
+                    courageModifier += 2;
+                    break;
+
+                case PLAYER_SHIELD_MIRROR:
+                    powerModifier += 2;
+                    courageModifier += 3;
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (CUR_EQUIP_VALUE(EQUIP_TYPE_BOOTS) - 1) {
+                case PLAYER_BOOTS_IRON:
+                    powerModifier += 2;
+                    courageModifier += 1;
+                    break;
+
+                case PLAYER_BOOTS_HOVER:
+                    courageModifier += 1;
+                    break;
+
+                default:
+                    break;
+            }
+
+            powerModifier += Player_GetStrength();
+        }
+        // End Leveled Plus Stats Cheat
+    } else {
+        if (CVarGetInteger("gLeveled.Player.Enhancements.EquipmentStats", 1) == 1) {
             switch (CUR_EQUIP_VALUE(EQUIP_TYPE_SWORD)) {
                 case PLAYER_SWORD_MASTER:
                     courageModifier += 1;
