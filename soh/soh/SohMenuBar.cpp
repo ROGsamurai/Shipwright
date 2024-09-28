@@ -2174,26 +2174,43 @@ void DrawLeveledMenu() {
                     ImGui::EndMenu();
                     }
                     if (ImGui::BeginMenu("Remove Xp")) {
-                        if (ImGui::Button("Remove 50xp")) {
-                            gSaveContext.experience -= 50;
-                        }
-                        if (ImGui::Button("Remove 100xp")) {
-                            gSaveContext.experience -= 100;
-                        }
-                        if (ImGui::Button("Remove 500xp")) {
-                            gSaveContext.experience -= 500;
-                        }
-                        if (ImGui::Button("Remove 1000xp")) {
-                            gSaveContext.experience -= 1000;
-                        }
-                        if (ImGui::Button("Remove 2500xp")) {
-                            gSaveContext.experience -= 2500;
-                        }
-                        if (ImGui::Button("Remove 5000xp")) {
-                            gSaveContext.experience -= 5000;
-                        }
-                        if (ImGui::Button("Remove 10000xp")) {
-                            gSaveContext.experience -= 10000;
+                        ImGui::TextColored({ 0.85f, 0.85f, 0.0f, 1.0f }, "         " ICON_FA_EXCLAMATION_TRIANGLE);
+                        ImGui::SameLine();
+                        ImGui::TextColored({ 0.85f, 0.35f, 0.0f, 1.0f }, " WARNING!!!! ");
+                        ImGui::SameLine();
+                        ImGui::TextColored({ 0.85f, 0.85f, 0.0f, 1.0f }, ICON_FA_EXCLAMATION_TRIANGLE);
+                        UIWidgets::PaddedText("Removing to much Xp could be harmful", true, false);
+                        UIWidgets::PaddedText("and put your Level -0.", true, false);
+                        ImGui::TextColored({ 0.85f, 0.35f, 0.0f, 1.0f }, "      PLEASE USE WITH CAUTION!");
+                        UIWidgets::PaddedEnhancementCheckbox("I Understand and wish to proceed!", CVAR_CHEAT("LeveledRemoveXp"), false, false);
+                        if (CVarGetInteger(CVAR_CHEAT("LeveledRemoveXp"), 0)) {
+                            if (ImGui::Button("Remove 50xp")) {
+                                gSaveContext.experience -= 50;
+                            }
+                            if (ImGui::Button("Remove 100xp")) {
+                                gSaveContext.experience -= 100;
+                            }
+                            if (ImGui::Button("Remove 500xp")) {
+                                gSaveContext.experience -= 500;
+                            }
+                            if (ImGui::Button("Remove 1000xp")) {
+                                gSaveContext.experience -= 1000;
+                            }
+                            if (ImGui::Button("Remove 2500xp")) {
+                                gSaveContext.experience -= 2500;
+                            }
+                            if (ImGui::Button("Remove 5000xp")) {
+                                gSaveContext.experience -= 5000;
+                            }
+                            if (ImGui::Button("Remove 10000xp")) {
+                                gSaveContext.experience -= 10000;
+                            }
+                            if (ImGui::Button("Remove 50000xp")) {
+                                gSaveContext.experience -= 50000;
+                            }
+                            if (ImGui::Button("Remove 100000xp")) {
+                                gSaveContext.experience -= 100000;
+                            }
                         }
                     ImGui::EndMenu();
                     }

@@ -358,6 +358,7 @@ const std::vector<const char*> cheatCvars = {
 
     // Leveled CVAR
     CVAR_CHEAT("LeveledMaxedStats"),
+    CVAR_CHEAT("LeveledRemoveXp"),
     CVAR_ENHANCEMENT("LeveledPlus"),
     // End Leveled CVAR
 };
